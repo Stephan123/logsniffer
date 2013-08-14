@@ -10,6 +10,20 @@
  * %s 'subject'
  * %b 'body'
  *
+ *
+ * Create Table
+ * CREATE TABLE `gitlog` (
+ *  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ *  `hash` varchar(255) NOT NULL,
+ *  `email` varchar(100) NOT NULL,
+ *  `name` varchar(100) NOT NULL,
+ *  `datum` varchar(100) NOT NULL,
+ *  `view` varchar(100) NOT NULL,
+ *  `beschreibung` text NOT NULL,
+ *  PRIMARY KEY (`id`)
+ * ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+ *
+ *
  * @author Stephan.Krauss
  * @date 14.00.2013
  * @file index.php
@@ -33,6 +47,7 @@ class gitlog
 
     public function __construct()
     {
+        date_default_timezone_set('Europe/London');
         $this->connect = new mysqli($this->host, $this->user, $this->password, $this->datenbank);
     }
 
@@ -60,48 +75,31 @@ class gitlog
     {
         $output = array();
         chdir($this->dir);
-        exec('"C:\Program Files (x86)\Git\bin\git.exe" ' ."log", $output);
+        exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
         $this->output = $output;
     }
 
     public function sichten()
     {
+        $eintragen = array();
+
         foreach($this->output as $line){
-            if(strpos($line, 'commit')===0){
-                if(!empty($commit)){
-                    array_push($this->history, $commit);
-                    unset($commit);
-
-                    $commit = array();
-                    $commit['message'] = ' ';
-                }
-                $commit['hash']   = substr($line, strlen('commit'));
-            }
-            else if(strpos($line, 'Author')===0){
-        	    $commit['author'] = substr($line, strlen('Author:'));
-            }
-            else if(strpos($line, 'Date')===0){
-        	    $commit['date']   = substr($line, strlen('Date:'));
-            }
-            else{
-                if(empty($line))
-                    continue;
-
-        	    $commit['message']  .= $line;
-            }
+            echo $line."<br>\n";
+            // $this->eintragenDatenbank($i);
         }
 
         return $this;
     }
 
-    public function kontrolle()
-    {
-        $test = 123;
+    public function eintragenDatenbank($i){
+
+        echo '<hr>';
+
+        return;
     }
 }
 
-
-$command = 'log --all --pretty=format:"%H"';
+$command = 'log --all --pretty=format:"%H # %ce # %cn # %ci # %s # %b"';
 
 $gitLogbuch = new gitlog();
-$gitLogbuch->setCommand('log')->work()->sichten()->kontrolle();
+$gitLogbuch->setCommand($command)->work()->sichten();
