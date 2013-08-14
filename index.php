@@ -1,6 +1,19 @@
 <?php
-
-
+/**
+ * schreibt die Logdatei eines Git Log in eine Tabelle
+ *
+ * %H 'commit hash'
+ * %n 'new line'
+ * %ce 'committer email'
+ * %cn 'committer name'
+ * %ci 'committer date' , ISO 8601
+ * %s 'subject'
+ * %b 'body'
+ *
+ * @author Stephan.Krauss
+ * @date 14.00.2013
+ * @file index.php
+ */
 class gitlog
 {
     protected $dir = "c:/xampp/htdocs/hob/";
@@ -86,6 +99,9 @@ class gitlog
         $test = 123;
     }
 }
+
+
+$command = 'log --all --pretty=format:"%H"';
 
 $gitLogbuch = new gitlog();
 $gitLogbuch->setCommand('log')->work()->sichten()->kontrolle();
