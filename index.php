@@ -76,7 +76,7 @@ class gitlog
         $output = array();
         chdir($this->dir);
         exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
-        $this->output = $output;
+        $this->output = $output; cfbcdgd
     }
 
     public function sichten()
