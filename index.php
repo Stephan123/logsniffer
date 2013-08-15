@@ -11,17 +11,22 @@
  * %b 'body'
  *
  *
- * Create Table
- * CREATE TABLE `gitlog` (
- *  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- *  `hash` varchar(255) NOT NULL,
- *  `email` varchar(100) NOT NULL,
- *  `name` varchar(100) NOT NULL,
- *  `datum` varchar(100) NOT NULL,
- *  `view` varchar(100) NOT NULL,
- *  `beschreibung` text NOT NULL,
- *  PRIMARY KEY (`id`)
- * ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
+    Create Table
+
+    CREATE TABLE `gitlog` (
+      `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `hash` varchar(255) NOT NULL,
+      `email` varchar(100) NOT NULL,
+      `name` varchar(100) NOT NULL,
+      `datum` datetime NOT NULL,
+      `module` varchar(100) NOT NULL,
+      `view` varchar(100) NOT NULL,
+      `beschreibung` text NOT NULL,
+      PRIMARY KEY (`id`),
+      FULLTEXT KEY `Volltext` (`beschreibung`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
  *
  *
  * @author Stephan.Krauss
