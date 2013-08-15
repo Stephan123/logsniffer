@@ -51,6 +51,14 @@ class gitlog
         $this->connect = new mysqli($this->host, $this->user, $this->password, $this->datenbank);
     }
 
+    public function loeschenTabelle()
+    {
+        $sql = "truncate table gitlog";
+        mysqli_query($this->connect, $sql);
+
+        return $this;
+    }
+
     public function setCommand($command)
     {
         $this->command = $command;
@@ -58,7 +66,17 @@ class gitlog
         return $this;
     }
 
-    public function work()
+    private function ermittelnOutput()
+    {
+        $output = array();
+        chdir($this->dir);
+        exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
+        $this->output = $output;
+
+        return;
+    }
+
+    public function steuerungEintragenDatenbank()
     {
         if(empty($this->command)){
             echo 'Kommando fehlt!';
@@ -66,40 +84,103 @@ class gitlog
             exit();
         }
 
-        $this->execute();
-
-        return $this;
-    }
-
-    private function execute()
-    {
-        $output = array();
-        chdir($this->dir);
-        exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
-        $this->output = $output;
-    }
-
-    public function sichten()
-    {
-        $eintragen = array();
+        $this->ermittelnOutput();
 
         foreach($this->output as $line){
-            echo $line."<br>\n";
-            // $this->eintragenDatenbank($i);
+            $this->darstellenDatensatz($line);
+            $this->eintragenDatenbank($line);
         }
 
         return $this;
     }
 
-    public function eintragenDatenbank($i){
-
-        echo '<hr>';
+    private function darstellenDatensatz($line)
+    {
+        echo $line."<br>\n";
 
         return;
     }
+
+    public function eintragenDatenbank($line){
+        $insert = explode("#", $line);
+
+        if(!is_array($insert) or count($insert) < 3)
+            return;
+
+        $insert[3] = $this->korrekturDatum($insert[3]);
+
+        $ort = $this->korrekturOrt($insert[4]);
+        $insert[6] = $insert[5];
+        $insert[4] = $ort[0];
+        $insert[5] = $ort[1];
+
+        $keys = array(
+           0 => 'hash',
+           1 => 'email',
+           2 => 'name',
+           3 => 'datum',
+           4 => 'module',
+           5 => 'view',
+           6 => 'beschreibung'
+        );
+
+        $query = "insert into gitlog (";
+
+        foreach($keys as $key => $spalte){
+            $query .= $spalte.",";
+        }
+
+        $query = substr($query,0,-1);
+        $query .= ") values (";
+
+        foreach($insert as $key => $values){
+            $query .= "'".$values."',";
+        }
+
+        $query = substr($query, 0, -1);
+        $query .= ")";
+
+        mysqli_query($this->connect, $query);
+
+
+        return;
+    }
+
+    private function korrekturDatum($datum)
+    {
+        $datum = trim($datum);
+        $datum = substr($datum, 0, -6);
+
+        return $datum;
+    }
+
+    private function korrekturOrt($ablage)
+    {
+        $ort = array();
+        $ablageTeile = explode("/",$ablage);
+
+        $i = 0;
+        foreach($ablageTeile as $value){
+            if($i > 1)
+                break;
+
+            if(empty($value))
+                continue;
+
+            $ort[$i] = $value;
+            $i++;
+        }
+
+        if(!isset($ort[0]))
+            $ort[0] = $ablage;
+        if(!isset($ort[1]))
+            $ort[1] = $ablage;
+
+        return $ort;
+    }
 }
 
-$command = 'log --all --pretty=format:"%H # %ce # %cn # %ci # %s # %b"';
+$command = 'log --all --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
 
 $gitLogbuch = new gitlog();
-$gitLogbuch->setCommand($command)->work()->sichten();
+$gitLogbuch->setCommand($command)->loeschenTabelle()->steuerungEintragenDatenbank();
