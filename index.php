@@ -91,19 +91,29 @@ class gitlog
 
         $this->ermittelnOutput();
 
+        $i = 1;
         foreach($this->output as $line){
-            $this->darstellenDatensatz($line);
+            $i = $this->darstellenDatensatz($i, $line);
             $this->eintragenDatenbank($line);
+
         }
 
         return $this;
     }
 
-    private function darstellenDatensatz($line)
+    private function darstellenDatensatz($i, $line)
     {
-        echo $line."<br>\n";
+        if(empty($line)){
+            echo "<br>";
 
-        return;
+            return $i;
+        }
+
+
+        echo $i." : ".$line."<br>";
+        $i++;
+
+        return $i;
     }
 
     public function eintragenDatenbank($line){
