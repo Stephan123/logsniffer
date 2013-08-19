@@ -76,7 +76,7 @@ class gitlog
         $output = array();
         chdir($this->dir);
         exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
-        $this->output = $output; cfbcdgd
+        $this->output = $output;
     }
 
     public function sichten()
@@ -99,7 +99,7 @@ class gitlog
     }
 }
 
-$command = 'log --all --pretty=format:"%H # %ce # %cn # %ci # %s # %b"';
+$command = 'log --all -5 --pretty=format:"%H # %ce # %cn # %ci # %s # %b"';
 
 $gitLogbuch = new gitlog();
 $gitLogbuch->setCommand($command)->work()->sichten();
