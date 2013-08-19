@@ -12,20 +12,25 @@
  *
  *
 
-    Create Table
+Create Table
 
-    CREATE TABLE `gitlog` (
-      `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-      `hash` varchar(255) NOT NULL,
-      `email` varchar(100) NOT NULL,
-      `name` varchar(100) NOT NULL,
-      `datum` datetime NOT NULL,
-      `module` varchar(100) NOT NULL,
-      `view` varchar(100) NOT NULL,
-      `beschreibung` text NOT NULL,
-      PRIMARY KEY (`id`),
-      FULLTEXT KEY `Volltext` (`beschreibung`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
+Create Table
+
+CREATE TABLE `gitlog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `hash` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `datum` date NOT NULL,
+  `zeit` time NOT NULL,
+  `module` varchar(100) NOT NULL,
+  `view` varchar(100) NOT NULL,
+  `beschreibung` text NOT NULL,
+  `betreff` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `Volltext` (`beschreibung`)
+) ENGINE=MyISAM AUTO_INCREMENT=555 DEFAULT CHARSET=utf8
 
  *
  *
@@ -94,41 +99,49 @@ class gitlog
 
         $i = 1;
         foreach($this->output as $line){
-            $i = $this->darstellenDatensatz($i, $line);
-            $this->eintragenDatenbank($line);
+            // $i = $this->darstellenDatensatz($i, $line);
+            $this->eintragenDatenbank($i, $line);
 
         }
+
+        if($i < 2)
+            echo 'Daten des Log &uuml;bernommen !';
+        else
+            echo 'Während der Daten&uuml;bernahme traten Fehler auf ! <hr>';
 
         return $this;
     }
 
-    private function darstellenDatensatz($i, $line)
+    private function darstellenDatensatz(&$i, $line)
     {
         if(empty($line)){
             echo "<br>";
 
-            return $i;
+            return;
         }
 
 
         echo $i." : ".$line."<br>";
-        $i++;
 
         return $i;
     }
 
-    public function eintragenDatenbank($line){
+    public function eintragenDatenbank(&$i, $line){
         $insert = explode("#", $line);
 
         if(!is_array($insert) or count($insert) < 3)
             return;
 
+        $insert[8] = $this->korrrekturZeit($insert[3]);
         $insert[3] = $this->korrekturDatum($insert[3]);
-
         $ort = $this->korrekturOrt($insert[4]);
         $insert[6] = $insert[5];
+        $insert[7] = $insert[4];
         $insert[4] = $ort[0];
         $insert[5] = $ort[1];
+
+        $kontrolle = ksort($insert);
+
 
         $keys = array(
            0 => 'hash',
@@ -137,7 +150,9 @@ class gitlog
            3 => 'datum',
            4 => 'module',
            5 => 'view',
-           6 => 'beschreibung'
+           6 => 'beschreibung',
+           7 => 'betreff',
+           8 => 'zeit'
         );
 
         $query = "insert into gitlog (";
@@ -150,14 +165,20 @@ class gitlog
         $query .= ") values (";
 
         foreach($insert as $key => $values){
-            $query .= "'".$values."',";
+            $values = str_replace('"','\'',$values);
+            $query .= '"'.$values.'",';
         }
 
         $query = substr($query, 0, -1);
         $query .= ")";
 
-        mysqli_query($this->connect, $query);
+        $kontrolle = mysqli_query($this->connect, $query);
 
+        if(empty($kontrolle)){
+            echo $i.': '.$query.'<hr>';
+
+            $i++;
+        }
 
         return;
     }
@@ -165,9 +186,16 @@ class gitlog
     private function korrekturDatum($datum)
     {
         $datum = trim($datum);
-        $datum = substr($datum, 0, -6);
+        $datum = substr($datum, 0, -15);
 
         return $datum;
+    }
+
+    private function korrrekturZeit($datum)
+    {
+        $zeit = substr($datum, 11, -6);
+
+        return $zeit;
     }
 
     private function korrekturOrt($ablage)
