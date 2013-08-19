@@ -1,0 +1,8 @@
+ Ignorieren von Dateien
+
+
+# und Verzeichnissen
+_*/
+.idea/
+igniteui/
+igniteui_demo/
