@@ -54,6 +54,7 @@ class gitlog
     {
         date_default_timezone_set('Europe/London');
         $this->connect = new mysqli($this->host, $this->user, $this->password, $this->datenbank);
+        mysqli_query($this->connect, "SET NAMES utf8");
     }
 
     public function loeschenTabelle()
