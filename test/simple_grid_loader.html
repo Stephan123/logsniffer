@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>einfache Tabelle mit Loader</title>
+    <meta charset="utf-8">
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Loader -->
+    <script src="../ignite/infragistics.loader.js"></script>
+
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: '../ignite/',
+            cssPath: '../css/',
+            locale: "de",
+            regional: "de",
+            resources: "igGrid"
+        });
+
+        $.ig.loader(function(){
+            $("#grid").igGrid({
+                defaultColumnWidth: 150
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+
+    <table id="grid">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Vorname</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Krauß</td>
+                <td>Stephan</td>
+            </tr>
+            <tr>
+                <td>Krauß</td>
+                <td>Antje</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
