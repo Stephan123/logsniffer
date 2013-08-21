@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="../css/jqm/jquery.mobile.structure.min.css"  rel="stylesheet"/>
+
+    <!-- Required Ignite UI Mobile Combined CSS Files -->
+    <link href="../../mobile/css/structure/infragistics.mobile.css"  rel="stylesheet"/>
+    <link href="../../mobile/css/themes/ios/infragistics.mobile.theme.css"  rel="stylesheet"/>
+
+    <script src="../js/jqm/jquery.min.js"></script>
+    <script src="../js/jqm/jquery.mobile.min.js"></script>
+
+    <!-- Required Ignite UI Mobile Combined JavaScript File -->
+    <script src="../../mobile/js/infragistics.mobile.js"></script>
+</head>
+<body>
+    <div data-role="page">
+
+        <script type="text/javascript" src="../data-files/nw-products.js"></script>
+
+        <script>
+
+            $(function () {
+
+                $("#basicJsonListView").igListView({
+                    dataSource: northwindProducts,
+                    bindings: {
+                        textKey: "CategoryName",
+                        headerKey: "ProductName"
+                    },
+                    features: [{
+                        name: "Sorting",
+                        type: "local",
+                        sortedFields: [{
+                            fieldName: "CategoryName",
+                            direction: "asc"
+                        }],
+                        showGrouping: true
+                    }]
+
+                });
+
+            });
+
+        </script>
+
+        <div data-role="content">
+
+            <ul id="basicJsonListView">
+            </ul>
+
+        </div>
+    </div>
+
+</body>
+</html>

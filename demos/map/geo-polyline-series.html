@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#map").igMap({
+                width: "700px",
+                height: "500px",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../images/samples/maps/world.png",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                series: [{
+                    type: "geographicPolyline",
+                    name: "naRoads",
+                    shapeMemberPath: "points",
+                    shapeDataSource: "../data-files/shapes/north_america_primary_roads.shp",
+                    databaseSource: "../data-files/shapes/north_america_primary_roads.dbf",
+                    outline: "grey"
+                }],
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0.2470,
+                    top: 0.3143,
+                    width: 0.127,
+                    height: 0.127
+                }
+            });
+        });
+    </script>
+
+    <div>
+        <div id="map"></div>
+        <h2 style="text-align: center; width: 700px; ">Major Roads in North America</h2>
+    </div>
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">must be hosted on a web server</span> to work as expected.</div></body>
+</html>

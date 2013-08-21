@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+        $(function () {
+            function generateData() {
+                var num = 10, data = [], curr = 10;
+                for (var i = 0; i < num; i++) {
+                    if (Math.random() > .5) {
+                        curr += Math.random() * 2.0;
+                    } else {
+                        curr -= Math.random() * 2.0;
+                    }
+                    var val1 = Math.round(curr * 1000.0) / 1000.0;
+                    data[i] = { Label: i.toString(), Index: i, Value1: val1 };
+                }
+                return new $.ig.DataSource({ dataSource: data });
+            }
+
+            function createChart(selector, seriesType, dataSource) {
+                $(selector).igDataChart({
+                    width: "400px",
+                    height: "400px",
+                    dataSource: dataSource,
+                    axes: [{
+                        name: "angleAxis",
+                        type: "numericAngle"
+                    },
+                    {
+                        name: "radiusAxis",
+                        type: "numericRadius"
+                    }],
+                    series: [{
+                        name: "series1",
+                        title: "$$(Chart_lbl_seriesTitle)",
+                        type: seriesType,
+                        angleAxis: "angleAxis",
+                        radiusAxis: "radiusAxis",
+                        angleMemberPath: "Index",
+                        radiusMemberPath: "Value1"
+                    }],
+                    horizontalZoomable: true,
+                    verticalZoomable: true,
+                    windowResponse: "immediate"
+                });
+            }
+
+            var data = generateData();
+            createChart("#chartScatter", "polarScatter", data);
+            createChart("#chartScatterLine", "polarLine", data);
+            createChart("#chartScatterArea", "polarArea", data);
+            createChart("#chartPolarSpline", "polarSpline", data);
+            createChart("#chartPolarSplineArea", "polarSplineArea", data);
+        });
+    </script>
+
+    <style type="text/css">
+        h4
+        {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .chart
+        {
+            position: relative;
+            float: left;
+            margin-right: 10px;
+        }
+    </style>
+
+    <div class="chartContainer">
+        <div class="chart">
+            <h4>Polar Scatter</h4>
+            <div id="chartScatter"></div>
+        </div>
+        <div class="chart">
+            <h4>Polar Line</h4>
+            <div id="chartScatterLine"></div>
+        </div>
+        <div class="chart">
+            <h4>Polar Area</h4>
+            <div id="chartScatterArea"></div>
+        </div>
+        <div class="chart">
+            <h4>Polar Spline</h4>
+            <div id="chartPolarSpline"></div>
+        </div>
+        <div class="chart">
+            <h4>Polar Spline Area</h4>
+            <div id="chartPolarSplineArea"></div>
+        </div>
+    </div>
+</body>
+</html>

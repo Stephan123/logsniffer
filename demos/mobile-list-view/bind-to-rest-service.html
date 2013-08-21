@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="../css/jqm/jquery.mobile.structure.min.css"  rel="stylesheet"/>
+
+    <!-- Required Ignite UI Mobile Combined CSS Files -->
+    <link href="../../mobile/css/structure/infragistics.mobile.css"  rel="stylesheet"/>
+    <link href="../../mobile/css/themes/ios/infragistics.mobile.theme.css"  rel="stylesheet"/>
+
+    <script src="../js/jqm/jquery.min.js"></script>
+    <script src="../js/jqm/jquery.mobile.min.js"></script>
+
+    <!-- Required Ignite UI Mobile Combined JavaScript File -->
+    <script src="../../mobile/js/infragistics.mobile.js"></script>
+</head>
+<body>
+    <div data-role="page">
+
+        <div data-role="content">
+            <ul id="restListView"
+                data-role="iglistview" 
+                data-response-data-type="jsonp"
+                data-response-data-key="d.results"
+                data-auto-generate-layouts="False" 
+                data-bindings-text-key="ContactName"
+                data-bindings-description-key="CompanyName"                
+                data-data-source-url="http://labs.infragistics.com/igniteui/api/customers?callback=?">
+            </ul>
+
+        </div>
+    </div>
+
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">requires an internet connection</span> to work as expected.</div></body>
+</html>

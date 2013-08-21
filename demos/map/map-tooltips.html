@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script src="../data-files/world-cities.js"></script>
+
+    <script id="cityTemplate" type="text/x-jquery-tmpl">
+        <table>
+            <tr><td class="tooltipHeading" colspan="2">${item.Name}, ${item.Country}</td></tr>
+            <tr>
+                <td>Latitude:</td>
+                <td>${item.Latitude}</td>
+            </tr>
+            <tr>
+                <td>Longitude:</td>
+                <td>${item.Longitude}</td>
+            </tr>
+        </table>
+    </script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#map").igMap({
+                width: "700px",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../images/samples/maps/world.png",
+                panModifier: "control",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                series: [{
+                    type: "geographicSymbol",
+                    name: "worldCities",
+                    dataSource: data,
+                    latitudeMemberPath: "Latitude",
+                    longitudeMemberPath: "Longitude",
+                    markerType: "automatic",
+                    markerCollisionAvoidance: "fade",
+                    markerBrush: "#1B559D",
+                    markerOutline: "black",
+                    showTooltip: true,
+                    tooltipTemplate: "cityTemplate"
+                }],
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0.27,
+                    top: 0.20,
+                    height: 0.45,
+                    width: 0.45
+                }
+            });
+        });
+    </script>
+
+    <div>
+        <div id="map"></div>
+        <h2 style="text-align: center; width: 700px; ">World Cities</h2>
+    </div>
+</body>
+</html>

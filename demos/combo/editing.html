@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style>        
+        .combo-label {margin-bottom:.5em;}
+    </style>
+
+    <h4 class="combo-label">Editable, Allows Custom Values, Dropdown Button Disabled</h4>
+    <div id="editableCombo"></div>
+
+    <h4 class="combo-label">Not Editable, Clear Button Disabled</h4>
+    <div id="dropdownCombo"></div>
+
+    <h4 class="combo-label">Read-only, Shows Dropdown</h4>
+    <div id="readonlylistCombo"></div>
+
+    <h4 class="combo-label">Read-only, Dropdown Disabled</h4>
+    <div id="readonlyCombo"></div>
+
+    <script src="../data-files/nw-products.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#editableCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                mode: "editable",
+                allowCustomValue: true,
+                showDropDownButton: false
+            });
+
+            $("#dropdownCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                mode: "dropdown",
+                enableClearButton: false
+            });
+
+            $("#readonlylistCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                mode: "readonlylist"
+            });
+
+            $("#readonlyCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                mode: "readonly"
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

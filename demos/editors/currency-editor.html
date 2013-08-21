@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style>
+        .currencyEditors h4 {
+            margin-bottom:.5em;
+        }
+    </style>
+    <div class="currencyEditors">
+        <h4>Default Configuration</h4>
+        <div id="defaultCurrencyEditor"></div>
+    
+        <h4>Number Pattern Configuration</h4>
+        <div id="currencyEditor"></div>
+
+        <h4>Symbol and Separator Configuation</h4>
+        <div id="currencyEditor2"></div>
+    </div>
+
+    <script>
+
+        $(function () {
+            $('#defaultCurrencyEditor').igCurrencyEditor({
+                width: 200
+            });
+
+            $('#currencyEditor').igCurrencyEditor({
+                width: 200,
+                value: -8709.98,
+                negativePattern: "$ -n",
+                postivePattern: "$ n"
+            });
+
+            $('#currencyEditor2').igCurrencyEditor({
+                width: 200,
+                value: 1264.89,
+                currencySymbol: "€",
+                currencyDecimalSeparator: ",",
+                currencyGroupSeparator: ""
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

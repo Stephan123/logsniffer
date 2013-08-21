@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <script src="../js/external/knockout-latest.js" type="text/javascript"></script>
+    <script src="../js/external/knockout.mapping-latest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../js/extensions/infragistics.ui.editors.knockout-extensions.js"></script>
+
+    <script>
+        var viewModel = {
+            orderDate: ko.observable("2012/10/24"),
+            shipDate: ko.observable("2012/11/12"),
+            dueInDays: ko.observable(7),
+            customerName: ko.observable("Peter Sanders"),
+            contactPhone: ko.observable("318-555-6879"),
+            advancePayment: ko.observable(516.89),
+            discountPercent: ko.observable(8)
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+
+    <style>
+        body { font-family: Arial; }
+        label { display: inline-block; }
+
+        .row { margin: 2px 0px 2px 0px; }
+        .heading-row
+        {
+            margin: 20px 0px 10px 0px;
+            font-size: large;
+        }
+        .editor-row { margin: 10px 0px 10px 0px; }
+        .heading-label, .row-label, .row-control
+        {
+            width: 200px;
+            margin: 0px 5px 0px 5px;
+        }
+         .date-row-control 
+        {
+            width: 200px;
+            margin: 10px 0px 0px 15px;
+        }
+    </style>
+
+    <div class="order-container">
+        <div class="row heading-row">
+            <label class="heading-label">Ignite UI Editors</label>
+            <label class="heading-label">Plain INPUTs</label>
+        </div>
+        
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Order Date:</label>
+            </div>
+            <div class="row">
+                <!-- date editor -->
+                <input id="orderDateIG" class="row-control" data-bind="igDateEditor: { value: orderDate }"/>
+                <input id="orderDate" type="date" class="row-control" data-bind="value: orderDate"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Ship Date</label>
+            </div>
+            <div class="row">
+                <!-- date picker -->
+                <input id="shipDateIG" class="row-control" data-bind="igDatePicker: { value: shipDate, width: '205px' }"/>
+                <input id="shipDate" type="date" class="date-row-control" data-bind="value: shipDate"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Due in Days:</label>
+            </div>
+            <div class="row">
+                <!-- numeric editor -->
+                <input id="dueInDaysIG" class="row-control" data-bind="igNumericEditor: { value: dueInDays }"/>
+                <input id="dueInDays" type="number" class="row-control" data-bind="value: dueInDays"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Customer Name:</label>
+            </div>
+            <div class="row">
+                <!-- text editor -->
+                <input id="customerNameIG" class="row-control" data-bind="igTextEditor: { value: customerName }"/>
+                <input id="customerNAme" type="text" class="row-control" data-bind="value: customerName"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Contact Phone: <br /> (mask: 000-000-0000)</label>
+            </div>
+            <div class="row">
+                <!-- mask editor -->
+                <input id="contactPhoneIG" class="row-control" data-bind="igMaskEditor: { 
+                        value: contactPhone,
+                        inputMask: '000-000-0000'
+                    }"/>
+                <input id="contactPhone" type="text" class="row-control" data-bind="value: contactPhone"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Advance Payment:</label>
+            </div>
+            <div class="row">
+                <!-- currency editor -->
+                <input id="advancePaymentIG" class="row-control" data-bind="igCurrencyEditor: { value: advancePayment }"/>
+                <input id="advancePayment" type="text" class="row-control" data-bind="value: advancePayment"/>
+            </div>
+        </div>
+
+        <div class="editor-row">
+            <div class="row">
+                <label class="row-label">Discount Percent:</label>
+            </div>
+            <div class="row">
+                <!-- percent editor -->
+                <input id="discountPercentIG" class="row-control" data-bind="igPercentEditor: { 
+                        value: discountPercent, displayFactor : 1 
+                    }"/>
+                <input id="discountPercent" type="text" class="row-control" data-bind="value: discountPercent"/>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

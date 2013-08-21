@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style>
+        .ig-pivot-data-selector-root {
+            width: 240px;
+            float: left;
+        }
+
+        .ig-pivot-grid-root {
+            width: 670px;
+            float: left;
+        }
+    </style>
+
+    <div id="dataSelector" class="ig-pivot-data-selector-root"></div>
+    <div class="ig-pivot-grid-root">
+        <table id="pivotGrid"></table>
+    </div>
+
+    <script>
+        $.support.cors = true;
+
+        $(function () {
+            var dataSource = new $.ig.OlapXmlaDataSource({
+                serverUrl: 'http://sampledata.infragistics.com/olap/msmdpump.dll',
+                catalog: 'Adventure Works DW Standard Edition',
+                cube: 'Adventure Works',
+                measureGroup: "Internet Sales",
+                rows: "[Sales Territory].[Sales Territory]",
+                columns: "[Product].[Product Categories]",
+                measures: "[Measures].[Internet Order Count]"
+            });
+
+            $('#dataSelector').igPivotDataSelector({
+                dataSource: dataSource,
+                height: "650px",
+                width: "240px"
+            });
+            $("#pivotGrid").igPivotGrid({
+                dataSource: dataSource,
+                height: "650px",
+                width: "670px"
+            });
+        });
+    </script>
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">requires an internet connection</span> to work as expected.</div></body>
+</html>

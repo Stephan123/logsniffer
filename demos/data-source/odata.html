@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .standard-grid { width:100%; border-top:1px solid #b1b1b1; border-right:1px solid #b1b1b1; border-spacing: 0;}
+        .standard-grid th, .standard-grid td { text-align:left; border-bottom:1px solid #b1b1b1; border-left:1px solid #b1b1b1; padding:4px;}
+    </style>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="table" class="standard-grid">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    BoxArt
+                </th>
+                <th>
+                    Synopsys
+                </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />
+
+    <script>
+
+        $(function () {
+            // Renders the table
+            var renderTable = function (success, error) {
+                var template = "<tr><td><img width='110' height='150' src='${BoxArt.LargeUrl}' /img></td></td><td>${Name}</td><td>{{html Synopsis}}</td></tr>";
+                if (success) {
+                    $("#table tbody").empty();
+                    $($.ig.tmpl(template, ds.dataView())).appendTo("#table tbody");
+                } else {
+                    alert(error);
+                }
+            }
+
+            // The $.ig.DataSchema is used to define the schema of the data
+            var oDataSchema = new $.ig.DataSchema("json", { 
+                fields: [
+                    { name: "Name" },
+                    { name: "BoxArt" },
+                    { name: "Synopsis" }
+                ],
+                searchField: "d"
+            });
+
+            var url = "http://odata.netflix.com/Catalog/Titles?$format=json&$callback=?&$top=10";
+
+            //This code creates an $.ig.DataSource bound to oData service
+            var ds = new $.ig.DataSource({
+                type: "remoteUrl",
+                callback: renderTable,
+                dataSource: url,
+                schema: oDataSchema,
+                responseDataKey: "d",
+                responseDataType: "jsonp"
+            });
+
+            // Binds to the underlying data
+            ds.dataBind();
+        });
+
+    </script>
+
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">requires an internet connection</span> to work as expected.</div></body>
+</html>

@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <!-- Used to style the API Viewer and Explorer UI -->
+    <link href="../css/apiviewer.css" rel="stylesheet" type="text/css" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+    <!-- Used to add markup and provide logging 
+        functionality for the API Explorer and API Viewer UI -->
+    <script src="../js/apiviewer.js"></script>
+</head>
+<body>
+    <style type="text/css">
+        #htmlEditor {
+            margin-bottom: 10px;
+        }
+        @media print {
+            .noprint {
+                display: none;
+            }
+            .content {
+                border: 0px;
+            }
+            #htmlEditor_source {
+                display:none;
+            }
+            #htmlEditor_editor {
+                width: 100%;
+            }
+            #htmlEditor_domPathToolbar {
+                display: none;
+            }
+            .ui-ightmleditor-content iframe
+            {
+                border-width: 0px;
+            }
+        }
+        #buttons {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="api-explorer noprint">
+        <fieldset>
+            <legend>Manipulating Text</legend>
+            <div id="buttons" class="noprint">
+                <button id="standardText" onclick="standardText()">Standard Text</button>
+                <button id="emphasize" onclick="emphasizeText()">Emphasize</button>
+                <button id="print" onclick="printHtmlEditor()">Print</button>
+            </div>
+        </fieldset>
+    </div>
+    <br />
+    <div id="htmlEditor"></div>
+
+    <div class="api-viewer noprint"></div>
+
+    <script>
+
+        $(function () {
+
+            // Used to show output in the API Viewer at runtime, 
+            // defined in external script 'apiviewer.js'    
+            var apiViewer = new $.ig.apiViewer();
+
+            /*----------------- Event Examples -------------------------*/
+
+            $("#htmlEditor").on("ightmleditorrendering", function (evt, ui) {
+                var message = "ightmleditorrendering";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorrendered", function (evt, ui) {
+                var message = "ightmleditorrendered";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditoractionexecuting", function (evt, ui) {
+                var message = "ightmleditoractionexecuting";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditoractionexecuted", function (evt, ui) {
+                var message = "ightmleditoractionexecuted";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditortoolbarcollapsing", function (evt, ui) {
+                var message = "ightmleditortoolbarcollapsing";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditortoolbarcollapsed", function (evt, ui) {
+                var message = "ightmleditortoolbarcollapsed";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditortoolbarexpanding", function (evt, ui) {
+                var message = "ightmleditortoolbarexpanding";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditortoolbarexpanded", function (evt, ui) {
+                var message = "ightmleditortoolbarexpanded";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorcut", function (evt, ui) {
+                var message = "ightmleditortoolbarcut";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorcopy", function (evt, ui) {
+                var message = "ightmleditortoolbarcopy";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorpaste", function (evt, ui) {
+                var message = "ightmleditortoolbarpaste";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorundo", function (evt, ui) {
+                var message = "ightmleditortoolbarundo";
+                apiViewer.log(message);
+            });
+
+            $("#htmlEditor").on("ightmleditorredo", function (evt, ui) {
+                var message = "ightmleditorredo";
+                apiViewer.log(message);
+            });
+
+            /*----------------- Instantiation -------------------------*/
+            $("#standardText").igButton();
+            $("#emphasize").igButton();
+            $("#print").igButton();
+
+            $("#htmlEditor").igHtmlEditor({
+                width: "100%"
+            });
+
+            $("#htmlEditor").igHtmlEditor("setContent", "", "html");
+        });
+
+        function emphasizeText() {
+            $("#htmlEditor").igHtmlEditor("executeAction", "bold");
+            $("#htmlEditor").igHtmlEditor("executeAction", "italic");
+            $("#htmlEditor").igHtmlEditor("executeAction", "foreColor", "red");
+        }
+
+        function standardText() {
+            var currentHtml = $("#htmlEditor").igHtmlEditor("getContent", "html");
+            $("#htmlEditor").igHtmlEditor("setContent", currentHtml + "This is standard text.", "html");
+        }
+
+        function printHtmlEditor() {
+            if (typeof document.getElementById("htmlEditor_editor").focus === "function")
+                document.getElementById("htmlEditor_editor").focus();
+            if (typeof document.getElementById("htmlEditor_editor").print === "function")
+                document.getElementById("htmlEditor_editor").print();
+            if (typeof document.getElementById("htmlEditor_editor").contentWindow.focus === "function")
+                document.getElementById("htmlEditor_editor").contentWindow.focus();
+            if (typeof document.getElementById("htmlEditor_editor").contentWindow.print === "function")
+                document.getElementById("htmlEditor_editor").contentWindow.print();
+        }
+    </script>
+
+</body>
+</html>

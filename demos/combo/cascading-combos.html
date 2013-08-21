@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <style type="text/css">
+
+        .label-container {
+            margin: 5px 0;
+        }
+
+            .label-container span {
+                display: block;
+                float: left;
+                width: 170px;
+                margin-bottom: 5px;
+            }
+
+        .clear-floating {
+            clear: both;
+        }
+
+        span[id^="combo"] {
+            margin-right: 15px;
+        }
+
+        #state, #stateCascading {
+            display: none;
+        }
+
+        {
+            display: none;
+        }
+
+        .group-container {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .group-title {
+            font-weight: bold;
+        }
+
+    </style>
+
+    <div class="group-container">
+        <span class="group-title">Individual Data Sources</span>
+        <div class="label-container">
+            <span>Country</span>
+            <span id="state">State</span>
+            <span id="district">District</span>
+            <span>Town</span>
+        </div>
+        <div class="clear-floating"></div>
+        <div>
+            <span id="comboCountry"></span>
+            <span id="comboDistrict"></span>
+            <span id="comboTown"></span>
+        </div>
+    </div>
+    <div class="group-container">
+        <span class="group-title">Cascading Data Sources</span>
+        <div class="label-container">
+            <span>Country</span>
+            <span id="stateCascading">State</span>
+            <span id="districtCascading">District</span>
+        </div>
+        <div class="clear-floating"></div>
+        <div>
+            <span id="comboCountryCascading"></span>
+            <span id="comboDistrictCascading"></span>
+        </div>
+    </div>
+
+    <script>
+
+        var dsCountry, dsCascTowns, dsCountryCascading,
+            dsCountryCascading, dsStatesUSCascading, dsDistrictBGCascading;
+
+        dsCountry = [
+			{ txtCountry: "United States", valCountry: "US" },
+			{ txtCountry: "Bulgaria", valCountry: "BG" }
+        ];
+
+        dsCascDistrict = [
+			{ keyCountry: "US", txtDistrict: "New Jersey", valDistrict: "NJ" },
+			{ keyCountry: "US", txtDistrict: "California", valDistrict: "CA" },
+			{ keyCountry: "US", txtDistrict: "Illinois", valDistrict: "IL" },
+			{ keyCountry: "US", txtDistrict: "New York", valDistrict: "NY" },
+			{ keyCountry: "US", txtDistrict: "Florida", valDistrict: "FL" },
+			{ keyCountry: "BG", txtDistrict: "Sofia", valDistrict: "SA" },
+			{ keyCountry: "BG", txtDistrict: "Plovdiv", valDistrict: "PV" },
+			{ keyCountry: "BG", txtDistrict: "Varna", valDistrict: "V" },
+			{ keyCountry: "BG", txtDistrict: "Yambol", valDistrict: "Y" }
+        ];
+
+        dsCascTowns = [
+			{ keyDistirct: "NJ", textTown: "Atlantic City", valTown: "AtlanticCity" },
+			{ keyDistirct: "NJ", textTown: "Dover", valTown: "Dover" },
+			{ keyDistirct: "CA", textTown: "Los Angeles", valTown: "LosAngeles" },
+			{ keyDistirct: "CA", textTown: "San Francisco", valTown: "San Francisco" },
+			{ keyDistirct: "CA", textTown: "San Diego", valTown: "SanDiego" },
+			{ keyDistirct: "IL", textTown: "Chicago", valTown: "Chicago" },
+            { keyDistirct: "NY", textTown: "New York", valTown: "NewYork" },
+			{ keyDistirct: "NY", textTown: "Buffalo", valTown: "Buffalo" },
+			{ keyDistirct: "FL", textTown: "Miami", valTown: " Miami" },
+			{ keyDistirct: "FL", textTown: "Orlando", valTown: "Orlando" },
+			{ keyDistirct: "SA", textTown: "Sofia", valTown: "Sofia" },
+			{ keyDistirct: "SA", textTown: "Pernik", valTown: "Pernik" },
+			{ keyDistirct: "PV", textTown: "Plovdiv", valTown: "Plovdiv" },
+			{ keyDistirct: "PV", textTown: "Asenovgrad", valTown: "Asenovgrad" },
+			{ keyDistirct: "V", textTown: "Varna", valTown: "Varna" },
+			{ keyDistirct: "V", textTown: "Kavarna", valTown: "Kavarna" },
+			{ keyDistirct: "V", textTown: "Balchik", valTown: "Balchik" },
+			{ keyDistirct: "Y", textTown: "Yambol", valTown: "Yambol" },
+			{ keyDistirct: "Y", textTown: "Kermen", valTown: "Kermen" },
+			{ keyDistirct: "Y", textTown: "Elhovo", valTown: "Elhovo" },
+			{ keyDistirct: "Y", textTown: "Bolyarovo", valTown: "Bolqrovo" },
+        ];
+
+        dsCountryCascading = [
+            { txtCountry: "United States", valCountry: "US" },
+            { txtCountry: "Bulgaria", valCountry: "BG" },
+        ];
+
+        dsStatesUSCascading = [
+			{ state: "New Jersey" },
+			{ state: "California" },
+			{ state: "Illinois" },
+			{ state: "New York" },
+			{ state: "Florida" }
+        ];
+
+        dsDistrictBGCascading = [
+			{ district: "Sofia" },
+			{ district: "Plovdiv" },
+			{ district: "Varna" },
+			{ district: "Yambol" }
+        ];
+
+        dsCascStatesDistricts = {
+            "US": { dataSource: dsStatesUSCascading, textKey: "state" },
+            "BG": { dataSource: dsDistrictBGCascading, textKey: "district" }
+        };
+
+        $(function () {
+
+            $("#comboCountry").igCombo({
+                textKey: "txtCountry",
+                selectedItems: [{ index: 1 }],
+                valueKey: "valCountry",
+                dataSource: dsCountry,
+                selectionChanged: function (e, args) {
+                    if (args.owner.selectedIndex() === 0) {
+                        $("#state").css("display", "inline");
+                        $("#district").css("display", "none");
+                    } else {
+                        $("#state").css("display", "none");
+                        $("#district").css("display", "inline");
+                    }
+                }
+            });
+
+            $("#comboDistrict").igCombo({
+                valueKey: "valDistrict",
+                textKey: "txtDistrict",
+                dataSource: dsCascDistrict,
+                parentComboKey: "keyCountry",
+                parentCombo: "#comboCountry"
+            });
+
+            $("#comboTown").igCombo({
+                valueKey: "valTown",
+                textKey: "textTown",
+                dataSource: dsCascTowns,
+                parentComboKey: "keyDistirct",
+                parentCombo: "#comboDistrict"
+            });
+
+            $("#comboCountryCascading").igCombo({
+                textKey: "txtCountry",
+                valueKey: "valCountry",
+                selectedItems: [{ index: 1 }],
+                dataSource: dsCountryCascading,
+                selectionChanged: function (e, args) {
+                    if (args.owner.selectedIndex() === 0) {
+                        $("#stateCascading").css("display", "inline");
+                        $("#districtCascading").css("display", "none");
+                    } else {
+                        $("#stateCascading").css("display", "none");
+                        $("#districtCascading").css("display", "inline");
+                    }
+                }
+            });
+
+            $("#comboDistrictCascading").igCombo({
+                cascadingDataSources: dsCascStatesDistricts,
+                parentCombo: $("#comboCountryCascading")
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

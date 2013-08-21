@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+    <script id="budgetTooltipTemplate" type="text/x-ig-tmpl">        
+        <div >
+            <span id="tooltipValue" style="font-family: Arial; font-size: 11px;">${item.Budget}</span>    
+        </div>       
+    </script>
+    <script id="depTooltipTemplate" type="text/x-ig-tmpl">        
+        <div >
+            <span id="tooltipValue" style="font-family: Arial; font-size: 11px;">${item.DepartmentSize}</span>    
+        </div>       
+    </script>
+</head>
+<body>
+    <div id="chart"></div>
+    <br />
+     <table class="options">
+        <tr>            
+            <td>Start Angle:</td>
+            <td>
+                <div id="angle" class="slider"></div>
+            </td>
+            <td>Series</td>
+            <td>
+                <select id="angleSeriesName">                    
+                    <option value="Budget" selected="selected">Budget</option>
+                    <option value="DepartmentSize">Department Size</option>                    
+                </select>
+            </td>
+        </tr>
+        <tr>            
+            <td>InnerExtent:</td>
+            <td>
+                <div id="innerExtent" class="slider"></div>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>               
+        <tr>
+            <td>Label Position for the Budget Series:</td>
+            <td>                
+                <select id="labelPosition">                    
+                    <option value="center" selected="selected">Center</option>
+                    <option value="insideEnd">Inside End</option>                    
+                    <option value="bestFit">Best Fit</option>
+                </select>               
+            </td>
+            <td></td>
+            <td></td>            
+        </tr>
+         <tr>
+            <td>Label Position for the Department Size Series:</td>
+            <td>                
+                <select id="labelPosition2">                    
+                    <option value="center" selected="selected">Center</option>
+                    <option value="insideEnd">Inside End</option>
+                    <option value="outsideEnd">Outside End</option>
+                    <option value="bestFit">Best Fit</option>
+                </select>               
+            </td>
+            <td>Label Extent</td>
+            <td>
+                <div id="labelExtent" class="slider"></div>
+            </td>
+            
+        </tr>
+    </table>
+
+    <script>
+
+        $(function () {
+
+            var data = [
+                { "DepartmentSize": 43, "Budget": 60, "Label": "Administration" },
+                { "DepartmentSize": 29, "Budget": 40, "Label": "Sales" },
+                { "DepartmentSize": 50, "Budget": 60, "Label": "IT" },
+                { "DepartmentSize": 22, "Budget": 40, "Label": "Marketing" },
+                { "DepartmentSize": 13, "Budget": 60, "Label": "Development" },
+                { "DepartmentSize": 34, "Budget": 20, "Label": "Support" }];
+
+
+            $("#chart").igDoughnutChart({
+                width: "550px",
+                height: "550px",
+                innerExtent: 20,
+                series:
+                    [
+                        {
+                            name: "Budget",
+                            labelMemberPath: "Label",
+                            valueMemberPath: "Budget",
+                            dataSource: data,
+                            labelsPosition: "center",
+                            showTooltip: true,
+                            tooltipTemplate: "budgetTooltipTemplate"
+                        },
+                        {
+                            name: "DepartmentSize",
+                            labelMemberPath: "Label",
+                            valueMemberPath: "DepartmentSize",
+                            dataSource: data,
+                            labelsPosition: "center",
+                            showTooltip: true,
+                            tooltipTemplate: "depTooltipTemplate"
+                        }
+                    ]
+
+            });
+
+            
+            $("#angle").slider({
+                slide: function (event, ui) {
+                    var seriesName = $("#angleSeriesName").val();                    
+                    if (seriesName == "Budget")
+                        $("#chart").igDoughnutChart("option", "series", [{ name: seriesName, startAngle: ui.value }]);
+                    else
+                        $("#chart").igDoughnutChart("updateSeries", { name: seriesName, startAngle: ui.value });
+                },
+                min: 0,
+                max: 360
+            });
+
+            $("#innerExtent").slider({
+                slide: function (event, ui) {
+                    $("#chart").igDoughnutChart("option", "innerExtent", ui.value);
+                },
+                min: 0,
+                max: 100,
+                value: 20
+            });
+
+            $("#labelExtent").slider({
+                slide: function (event, ui) {
+                    $("#chart").igDoughnutChart("updateSeries", { name: "DepartmentSize", labelExtent: ui.value });
+                },
+                min: 0,
+                max: 50,
+                value: 10
+            });
+            //  jQuery UI 1.7 does not apply disabled styles on initialization
+            $("#labelExtent").slider("option", "disabled", true);
+
+            $("#explodedRadius").slider({
+                slide: function (event, ui) {
+                    $("#chart").igPieChart("option", "explodedRadius", ui.value / 100);
+                },
+                min: 0,
+                max: 100,
+                value: 20
+            });
+            $("#labelPosition").change(function (e) {
+                var labelPosition = $(this).val();
+                $("#chart").igDoughnutChart("updateSeries", { name: "Budget", labelsPosition: labelPosition });                
+            });
+            $("#labelPosition2").change(function (e) {
+                var labelPosition = $(this).val();
+                $("#chart").igDoughnutChart("updateSeries", { name: "DepartmentSize", labelsPosition: labelPosition });
+                $("#labelExtent").slider("option", "disabled", labelPosition != "outsideEnd");
+            });
+
+        });
+    </script>
+
+</body>
+</html>

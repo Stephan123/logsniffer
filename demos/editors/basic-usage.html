@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style>
+        #editors p {
+            margin-bottom: .5em;
+        }
+    </style>
+
+    <div id="editors">
+        <!-- Editors can also be created from DIV elements -->
+        <p><input id="textEditor" value="John" /></p>
+        <p><input id="dateEditor" value="7/27/2012" /></p>
+        <p><input id="maskEditor" value="mask edit" /></p>
+        <p><input id="currencyEditor" value="42" /></p>
+        <p><input id="numericEditor" value="42" /></p>
+        <p><input id="percentEditor" value="42" /></p>
+    </div>
+    <script>
+
+        $(function () {
+
+            $("#textEditor").igTextEditor();
+
+            $("#dateEditor").igDateEditor();
+
+            $("#maskEditor").igMaskEditor();
+
+            $("#currencyEditor").igCurrencyEditor();
+
+            $("#numericEditor").igNumericEditor();
+
+            $("#percentEditor").igPercentEditor();
+
+        });
+    </script>
+
+</body>
+</html>

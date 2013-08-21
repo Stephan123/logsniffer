@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <style type="text/css">
+        #chart {
+            display:inline-block;
+            margin-right: 10px;
+        }
+
+        #legend {
+            display:inline-block;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        .slider {
+            width: 200px;
+            height: 10px;
+            margin: 10px;
+        }
+    </style>
+
+    <!-- Widget target elements -->    
+    <div id="chart"></div>
+    <div id="legend"></div>
+
+    <table class="options">
+        <tr>
+            <td>Start Angle:</td>
+            <td>
+                <div id="angle" class="slider"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Radius:</td>
+            <td>
+                <div id="radius" class="slider"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Label Extent</td>
+            <td>
+                <div id="labelExtent" class="slider"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Exploded Radius</td>
+            <td>
+                <div id="explodedRadius" class="slider"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Label Position:</td>
+            <td>
+                <div class="comboContainer">
+                    <select id="labelPosition">
+                        <option value="none">None</option>
+                        <option value="center" selected="selected">Center</option>
+                        <option value="insideEnd">Inside End</option>
+                        <option value="outsideEnd">Outside End</option>
+                        <option value="bestFit">Best Fit</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+
+        $(function () {
+
+            data = [{ "Budget": 60, "Label": "Administration" }, { "Budget": 40, "Label": "Sales" },
+                { "Budget": 60, "Label": "IT" }, { "Budget": 40, "Label": "Marketing" },
+                { "Budget": 60, "Label": "Development" }, { "Budget": 20, "Label": "Support" }];
+
+            $('#chart').igPieChart({
+                dataSource: data,
+                width: '500px',
+                height: '500px',
+                valueMemberPath: 'Budget',
+                labelMemberPath: 'Label',
+                explodedSlices: [0, 1],
+                radiusFactor: .8,
+                legend: { element: 'legend', type: "item" }
+            });
+
+            $("#angle").slider({
+                slide: function (event, ui) {
+                    $("#chart").igPieChart("option", "startAngle", ui.value);
+                },
+                min: 0,
+                max: 360
+            });
+
+            $("#radius").slider({
+                slide: function (event, ui) {
+                    $("#chart").igPieChart("option", "radiusFactor", ui.value / 1000.0);
+                },
+                min: 0,
+                max: 1000,
+                value: 800
+            });
+
+            $("#labelExtent").slider({
+                slide: function (event, ui) {
+                    $("#chart").igPieChart("option", "labelExtent", ui.value);
+                },
+                min: 0,
+                max: 50,
+                value: 10
+            });
+            //  jQuery UI 1.7 does not apply disabled styles on initialization
+            $("#labelExtent").slider("option", "disabled", true);
+
+            $("#explodedRadius").slider({
+                slide: function (event, ui) {
+                    $("#chart").igPieChart("option", "explodedRadius", ui.value / 100);
+                },
+                min: 0,
+                max: 100,
+                value: 20
+            });
+
+            $("#labelPosition").igCombo({
+                enableClearButton: false,
+                mode: "dropdown",
+                selectionChanged: function (evt, ui) {
+                    if ($.isArray(ui.items) && ui.items[0] != undefined) {
+                        $("#chart").igPieChart("option", "labelsPosition", ui.items[0].value);
+                        $("#labelExtent").slider("option", "disabled", ui.items[0].value != "outsideEnd");
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

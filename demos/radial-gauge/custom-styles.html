@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <table>
+        <tr>
+            <td style="padding-right:40px">Circular RadialGauge with custom colors and extents<div id="radialgauge1"></div></td>
+            <td style="padding-right:40px">Fitted RadialGauge with custom colors and extents<div id="radialgauge2"></div></td>
+        </tr>
+    </table>
+    <script>
+
+        $(function () {
+            $("#radialgauge1").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                value: 1,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: 0,
+                maximumValue: 10,
+                backingShape: "circular",
+                scaleSweepDirection: "clockwise",                
+
+                // set colors
+                backingOutline: "none",
+                backingBrush: "#fff",
+                backingStrokeThickness: 1,
+                scaleBrush: "#A4bA29",
+                tickBrush: "#fff",
+                tickStrokeThickness: 2,
+                minorTickBrush: "#fff",
+                minorTickStrokeThickness: 0.6,
+                minorTickCount: 4,
+                fontBrush: "#333333",
+                needleShape: "needleWithBulb",
+                needleBrush: "#494949 ",
+                needleOutline: "#333333",
+                needleStrokeThickness: 0.8,
+                needlePivotShape: "circleOverlayWithHole",
+                needlePivotBrush: "#808080 ",
+                needlePivotOutline: "#494949",
+                needlePivotStrokeThickness: 0.5,
+
+                // set extents
+                backingInnerExtent: 0.2,
+                backingOuterExtent: 0.9,
+                backingOversweep: 4,
+                scaleStartExtent: 0.48,
+                scaleEndExtent: 0.76,
+                scaleOversweep: 4,
+                needleStartExtent: -0.2,
+                needleEndExtent: 0.6,
+                needleStartWidthRatio: 0.1, 
+                needleEndWidthRatio: 0.1,
+                needleBaseFeatureWidthRatio: 0.15, 
+                needleBaseFeatureExtent: 0.06, 
+                needlePointFeatureWidthRatio: 0.06, 
+                needlePointFeatureExtent: 0.5,
+                needlePivotWidthRatio: 0.15,
+                needlePivotInnerWidthRatio: 0.05,
+                tickStartExtent: 0.66,
+                tickEndExtent: 0.75,
+                minorTickStartExtent: 0.69,
+                minorTickEndExtent: 0.75,
+                labelExtent: 0.82,
+                ranges: [
+                        {
+                            name: "range11",
+                            startValue: 0,
+                            endValue: 6,
+                            outerStartExtent: .52,
+                            outerEndExtent: .59,
+                            innerStartExtent: 0.5,
+                            innerEndExtent: 0.5,
+                            strokeThickness: 0.8,
+                            outline: "#2380A8   ",
+                            brush: "#44ACD6   "
+                        },
+                        {
+                            name: "range12",
+                            startValue: 6,
+                            endValue: 10,
+                            outerStartExtent: .59,
+                            outerEndExtent: .66,
+                            innerStartExtent: 0.5,
+                            innerEndExtent: 0.5,
+                            strokeThickness: 0.8,
+                            outline: "#185170  ",
+                            brush: "#216E99  "
+                        }]
+            });
+
+            $("#radialgauge2").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                value: 5,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: 0,
+                maximumValue: 10,
+                backingShape: "fitted",
+                scaleSweepDirection: "clockwise",
+
+                // set colors
+                backingOutline: "#494949 ",
+                backingBrush: "#44ACD6  ",
+                backingStrokeThickness: 1,
+                scaleBrush: "#2380A8   ",
+                tickBrush: "#44ACD6   ",
+                tickStrokeThickness: 3,
+                minorTickBrush: "44ACD6 ",
+                minorTickStrokeThickness: 1,
+                minorTickCount: 3,
+                fontBrush: "#fff",
+                needleShape: "needleWithBulb",
+                needleBrush: "#494949  ",
+                needleOutline: "#333  ",
+                needleStrokeThickness: 1,
+                needlePivotShape: "none",
+                needlePivotBrush: "#808080 ",
+                needlePivotOutline: "#494949",
+                needlePivotStrokeThickness: 0.5,
+
+                // set extents
+                backingInnerExtent: 0.3,
+                backingOuterExtent: 0.9,
+                backingOversweep: 6,
+                backingCornerRadius: 11,
+                scaleStartExtent: 0.47,
+                scaleEndExtent: 0.76,
+                scaleOversweep: 2,
+                needleStartExtent: -0.2,
+                needleEndExtent: 0.65,
+                needleStartWidthRatio: 0.1,
+                needleEndWidthRatio: 0.1,
+                needleBaseFeatureWidthRatio: 0.15,
+                needleBaseFeatureExtent: 0.06,
+                needlePointFeatureWidthRatio: 0.06,
+                needlePointFeatureExtent: 0.5,
+                needlePivotWidthRatio: 0.15,
+                needlePivotInnerWidthRatio: 0.05,
+                tickStartExtent: 0.66,
+                tickEndExtent: 0.75,
+                minorTickStartExtent: 0.69,
+                minorTickEndExtent: 0.75,
+                labelExtent: 0.82,
+                ranges: [
+                        {
+                            name: "range21",
+                            startValue: 0,
+                            endValue: 4,
+                            outerStartExtent: .65,
+                            outerEndExtent: .65,
+                            innerStartExtent: 0.5,
+                            innerEndExtent: 0.5,
+                            strokeThickness: 0.3,
+                            outline: "none ",
+                            brush: "#F79036     "
+                        },
+                        {
+                            name: "range22",
+                            startValue: 4,
+                            endValue: 10,
+                            outerStartExtent: .65,
+                            outerEndExtent: .65,
+                            innerStartExtent: 0.5,
+                            innerEndExtent: 0.5,
+                            strokeThickness: 0.4,
+                            outline: "none ",
+                            brush: "#D3404B     "
+                        }]
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Loader JavaScript File -->
+    <script src="../../js/infragistics.loader.js"></script>
+
+</head>
+<body>
+
+    <table id="grid1"></table>								
+
+    <!-- Data File -->
+    <script src="../data-files/adventureworks.min.js"></script>
+
+	<script type="text/javascript">
+	    $.ig.loader({
+	        scriptPath: "../../js/",
+	        cssPath: "../../css/",
+	        resources: "igGrid.Sorting"
+	    });
+
+	    $.ig.loader(function () {
+	        $("#grid1").igGrid({
+	            autoGenerateColumns: false,
+	            columns: [
+					{ headerText: "ID", key: "ProductID", dataType: "number" },
+					{ headerText: "Name", key: "Name", dataType: "string" },
+					{ headerText: "Number", key: "ProductNumber", dataType: "string" },
+					{ headerText: "Cost", key: "StandardCost", dataType: "number" }
+	            ],
+	            dataSource: adventureWorks,
+	            height: "400px",
+	            features: [
+				{
+				    name: "Sorting",
+				    type: "local",
+				    mode: "multiple"
+				}
+	            ]
+	        });
+	    });
+	</script>
+
+</body>
+</html>

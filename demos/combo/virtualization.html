@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <div id="comboNetflix"></div>
+
+    <script>
+
+        $(function () {
+
+            $("#comboNetflix").igCombo({
+                virtualization: true,
+                filteringType: "remote",
+                renderMatchItems: "contains",
+                responseDataKey: "d.results",
+                valueKey: "Name",
+                width: "200px",
+                dataSource: 'http://odata.netflix.com/Catalog/Titles?$format=json&$callback=?'
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

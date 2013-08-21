@@ -1,0 +1,8 @@
+﻿.ui-radialgauge-needle{background-color:#CED3D8;border-color:#B2B9C0}
+.ui-radialgauge-needlePivot{background-color:#CED3D8;border-color:#B2B9C0}
+.ui-radialgauge-backing{background-color:#EBEDEF;border-color:#B2B9C0}
+.ui-radialgauge-scale{background-color:#FFC73C}
+.ui-radialgauge-tick{background-color:#617583}
+.ui-radialgauge-minorTick{background-color:rgba(100,107,114,.74)}
+.ui-radialgauge-label{background-color:rgba(100,107,114,.74)}
+.ui-igtrialwatermark{width:160px;height:20px;background-image:url(../images/trial.png);opacity:.25;filter:alpha(opacity=25);-ms-filter:"alpha(opacity=25)";-khtml-opacity:.25;-moz-opacity:.25}

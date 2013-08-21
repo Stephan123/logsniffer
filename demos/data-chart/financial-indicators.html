@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript" src="../data-files/financial-indicators.js"></script>
+    <script type="text/javascript" src="../data-files/financial-data.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#priceChart").igDataChart({
+                width: "500px",
+                height: "300px",
+                dataSource: data,
+                axes: [{
+                    type: "categoryX",
+                    label: "DateString",
+                    name: "xAxis",
+                    labelVisibility: "collapsed"
+                }, {
+                    type: "numericY",
+                    name: "yAxis"
+                }],
+                series: [{
+                    type: "financial",
+                    closeMemberPath: "Close",
+                    highMemberPath: "High",
+                    lowMemberPath: "Low",
+                    openMemberPath: "Open",
+                    volumeMemberPath: "Volume",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    name: "priceSeries",
+                    title: "Price Data"
+                }]
+            });
+
+            $("#indicatorChart").igDataChart({
+                width: "500px",
+                height: "300px",
+                dataSource: data,
+                axes: [{
+                    type: "categoryX",
+                    label: "DateString",
+                    name: "xAxis",
+                    labelVisibility: "collapsed"
+                }, {
+                    type: "numericY",
+                    name: "yAxis"
+                }],
+                series: [{
+                    type: "moneyFlowIndexIndicator",
+                    closeMemberPath: "Close",
+                    highMemberPath: "High",
+                    lowMemberPath: "Low",
+                    openMemberPath: "Open",
+                    volumeMemberPath: "Volume",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    name: "indicatorSeries",
+                    title: "Financial Indicator Data"
+                }]
+            });
+
+            $("#cbxIndicator").igCombo({
+                width: "380px",
+                enableClearButton: false,
+                mode: "dropdown",
+                dataSource: indicators,
+                textKey: "text",
+                valueKey: "key",
+                selectedItems: [{ index: 17 }],
+                selectionChanged: function (evt, ui) {
+                    if (ui.items && ui.items[0]) {
+                        changeIndicator(ui.items[0].value);
+                    }
+                }
+            });
+
+        });
+
+        function changeIndicator(newIndicator) {
+            $("#indicatorChart").igDataChart("option", "series", [{
+                name: "indicatorSeries",
+                remove: true
+            }]);
+
+            $("#indicatorChart").igDataChart("option", "series", [{
+                type: newIndicator,
+                name: "indicatorSeries",
+                title: "Financial Indicator Data",
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                closeMemberPath: "Close",
+                highMemberPath: "High",
+                lowMemberPath: "Low",
+                openMemberPath: "Open",
+                volumeMemberPath: "Volume"
+            }]);
+        };
+    </script>
+
+    <style type="text/css">
+        #priceChart, #indicatorChart
+        {
+            margin: 10px 0px 10px 0px;
+        }
+        
+        #comboContainer 
+        {
+            position: relative;
+            float: right;
+        }
+        
+        .selectionOptions
+        {
+            width: 496px;
+            margin-left: 5px;
+            margin-top: 10px;
+        }
+    </style>
+
+    <div id="priceChart"></div>
+    <div id="indicatorChart"></div>
+
+    <div class="selectionOptions">
+        <label>Select Indicator:</label>
+        <span id="comboContainer"><span id="cbxIndicator"></span></span>
+    </div>
+</body>
+</html>

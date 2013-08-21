@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <link href="../css/charts/chart-samples.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript">
+        var data = [
+            { Budget: 30, Department: "Administration" },
+            { Budget: 50, Department: "Sales" },
+            { Budget: 60, Department: "IT" },
+            { Budget: 50, Department: "Marketing" },
+            { Budget: 100, Department: "Development" },
+            { Budget: 20, Department: "Support" }
+        ];
+
+        $(function () {
+            //  Create a regular funnel chart: It is styled according to the CSS in the infragistics.theme.css
+            //  The styles are redefined later in the <style> node of the page
+            $("#chartCSS").igFunnelChart({
+                width: "100%",
+                height: "500px",
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible"
+            });
+
+            //  Create a funnel chart with brushes and outlines options set with specific colors
+            $("#chartOptions").igFunnelChart({
+                width: "100%",
+                height: "500px",
+                dataSource: data,
+                brushes: ["#7DC3D9", "#3e5354", "#9EB5B4", "#5DD1C6", "#AFD1CE", "#2B768E"],
+                outlines: [ "#3189A6", "#212D2E", "#5C7877", "#2FA498", "#487D78", "#163F4B" ],
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible"
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        /* Redefine the styles from infragistics.theme.css that define fill and border colors for slices */
+        .ui-chart-palette-1 { border-color: #00AADE; background-color: #00AADE }
+        .ui-chart-palette-2 { border-color: #4B4B4D; background-color: #4B4B4D }
+        .ui-chart-palette-3 { border-color: #FCB025; background-color: #FCB025 }
+        .ui-chart-palette-4 { border-color: #EC6C2B; background-color: #EC6C2B }
+        .ui-chart-palette-5 { border-color: #36C0F3; background-color: #36C0F3 }
+        .ui-chart-palette-6 { border-color: #5B17A8; background-color: #5B17A8 }
+    </style>
+
+    <div class="sampleContent">
+        <div class="chartContainer">
+            <h4>Styled by CSS</h4>
+            <div id="chartCSS"></div>
+        </div>
+        <div class="chartContainer">
+            <h4>Styled by Widget Options</h4>
+            <div id="chartOptions"></div>
+        </div>
+    </div>
+</body>
+</html>

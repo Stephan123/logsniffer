@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <style>
+        #slNightSky {
+            border-color: #FFFFFF;
+        }
+
+        #slSnakeSkin {
+            border-color: #FFFFFF;
+            margin: 20px 0 0 0;
+        }
+
+    </style>
+
+    <!-- Target element for the igSparkline -->
+    <div id="slNightSky"></div>
+    <div id="slSnakeSkin"></div>
+
+    <!-- File supplying the northwindInvoices object for the igSparkline data source -->
+    <script src="../data-files/financial-data.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#slNightSky").igSparkline({
+                dataSource: data,
+                displayType: "area",
+                height: "150px",
+                width: "400px",
+                valueMemberPath: 'Change',
+                labelMemberPath: 'Date',
+                brush: "#446185",
+                normalRangeVisibility: "visible",
+                trendLineBrush: "#d0d0e0",
+                trendLineType: "simpleAverage",
+                markerVisibility: "visible",
+                markerBrush: "#a8aec4",
+                markerSize: 1
+            });
+
+            $("#slSnakeSkin").igSparkline({
+                dataSource: data,
+                displayType: "column",
+                height: "150px",
+                width: "400px",
+                valueMemberPath: 'Change',
+                labelMemberPath: 'Date',
+                negativeBrush: "#cfc8c0",
+                negativeMarkerVisibility: "collapsed",
+                brush: "#bdada1",
+                normalRangeVisibility: "visible",
+                trendLineBrush: "#403636",
+                trendLineType: "simpleAverage",
+                markerVisibility: "visible",
+                markerBrush: "#6e5348",
+                trendLineThickness: 2
+            });
+
+        });
+    </script>       
+
+</body>
+</html>

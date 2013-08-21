@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <style>
+        .containerTree {
+            overflow: auto;
+            width: 100%;
+        }
+
+        #left {
+            display: inline;
+            float: left;
+        }
+
+        #right {
+            float: left;
+            margin-left:30px;
+            width: 330px;
+        }
+
+        #firstTree, #secondTree {
+            font-size: 14px;
+        }
+    </style>
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <div class="containerTree">
+        <div id="left">
+            <!--igTree target element-->
+            <div id="firstTree"></div>
+        </div>
+        <div id="right">
+            <!--igTree target element-->
+            <div id="secondTree"></div>
+        </div>
+    </div>
+
+    <script src="../data-files/hierarchical-files.js"></script>
+
+    <script>
+
+        $(function () {            
+
+            $("#firstTree").igTree({
+                checkboxMode: 'triState',
+                singleBranchExpand: true,
+                dataSource: $.extend(true, [], files),
+                dataSourceType: 'json',
+                initialExpandDepth: 0,
+                pathSeparator: '.',
+                bindings: {
+                    textKey: 'Text',
+                    valueKey: 'Value',
+                    imageUrlKey: 'ImageUrl',
+                    childDataProperty: 'Folder'
+                },
+                dragAndDrop: true,
+                dragAndDropSettings: {
+                    allowDrop: true,
+                    customDropValidation: function (element) {
+                        // Validates the drop target
+                        var valid = true,
+							droppableNode = $(this);
+
+                        if (droppableNode.is('a') && droppableNode.closest('li[data-role=node]').attr('data-value') === 'File') {
+                            valid = false;
+                        }
+
+                        return valid;
+                    }
+                }
+            });
+
+            $("#secondTree").igTree({
+                checkboxMode: 'triState',
+                singleBranchExpand: true,
+                dataSource: $.extend(true, [], files),
+                dataSourceType: 'json',
+                initialExpandDepth: 0,
+                pathSeparator: '.',
+                bindings: {
+                    textKey: 'Text',
+                    valueKey: 'Value',
+                    imageUrlKey: 'ImageUrl',
+                    childDataProperty: 'Folder'
+                },
+                dragAndDrop: true,
+                dragAndDropSettings: {
+                    allowDrop: true,
+                    customDropValidation: function (element) {
+                        // Validates the drop target
+                        var valid = true,
+							droppableNode = $(this);
+
+                        if (droppableNode.is('a') && droppableNode.closest('li[data-role=node]').attr('data-value') === 'File') {
+                            valid = false;
+                        }
+
+                        return valid;
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

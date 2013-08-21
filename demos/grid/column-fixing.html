@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="grid"></table>
+    <script>
+        $(function () {
+            $("#grid").igGrid({
+                columns: [
+                    { headerText: "Customer ID", key: "ID", dataType: "string", width: "150px" },
+                    { headerText: "Company Name", key: "CompanyName", dataType: "string", width: "130px" },
+                    { headerText: "Contact Name", key: "ContactName", dataType: "string", width: "100px" },
+                    { headerText: "Contact Title", key: "ContactTitle", dataType: "string", width: "160px" },
+                    { headerText: "Address", key: "Address", dataType: "string", width: "180px" },
+                    { headerText: "City", key: "City", dataType: "string", width: "110px" },
+                    { headerText: "Country", key: "Country", dataType: "string", width: "100px" }
+                ],
+                autoGenerateColumns: false,
+                dataSource: nwCustomersWithOrders,
+                width: "700px",
+                height: "400px",
+                features: [
+                    {
+                        name: "ColumnFixing",
+                        columnSettings: [
+                            {
+                                columnKey: "CompanyName",
+                                isFixed: true
+                            }
+                        ]
+                    }
+                ]
+            });
+        });
+    </script>
+    <script src="../data-files/nw-customers-with-orders.js"></script>
+</body>
+</html>

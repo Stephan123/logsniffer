@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+
+    <!-- Target element for the igSparkline -->
+    <div id="sparkline"></div>
+    
+    <!-- File supplying the northwindInvoices object for the igSparkline data source -->
+    <script src="../data-files/nw-invoices.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#sparkline").igSparkline({
+            	dataSource: "http://labs.infragistics.com/igniteui/api/invoices?callback=?",
+                responseDataKey: "d.results",
+                height: "100px",
+                width: "300px",
+                valueMemberPath: 'ExtendedPrice',
+                labelMemberPath: 'OrderDate'
+            });
+
+        });
+    </script>       
+
+</body>
+</html>

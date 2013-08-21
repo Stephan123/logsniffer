@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <div id="igUpload1"></div>
+    <div id="error-message" style="color: #FF0000; font-weight: bold;"></div>
+
+    <script>
+        $(function () {
+            var buttonLabel = $.ig.Upload.locale.labelUploadButton;
+            if (Modernizr.input.multiple) {
+                buttonLabel = "Drag and Drop Files Here <br/> or Click to Select From a Dialog";
+            }
+            $("#igUpload1").igUpload({
+                mode: 'multiple',
+                multipleFiles: true,
+                maxUploadedFiles: 5,
+                maxSimultaneousFilesUploads: 2,
+                progressUrl: "/IGUploadStatusHandler.ashx",
+                controlId: "serverID1",
+                labelUploadButton: buttonLabel,
+                onError: function (e, args) {
+                    showAlert(args);
+                }
+            });
+            if (Modernizr.input.multiple) {
+                $(".ui-igstartupbrowsebutton").attr("style", "width: 320px; height: 80px;");
+            }
+        });
+
+        function showAlert(args) {
+            $("#error-message").html(args.errorMessage).stop(true, true).fadeIn(500).delay(3000).fadeOut(500);
+        }
+    </script>
+
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">must be hosted on a web server</span> to work as expected.</div></body>
+</html>

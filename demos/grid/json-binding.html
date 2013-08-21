@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="grid"></table>
+
+    <script>
+
+        $(function () {
+
+            var data = [
+                      { "Name": "John Smith", "Age": 45 },
+                      { "Name": "Mary Johnson", "Age": 32 },
+                      { "Name": "Bob Ferguson", "Age": 27 }
+                ];
+            
+            $("#grid").igGrid({
+                width: 400,
+                dataSource: data //JSON Array defined above                          
+            });
+        });
+    </script>
+
+</body>
+</html>

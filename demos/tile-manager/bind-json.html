@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/modules/infragistics.ui.layout.css" rel="stylesheet" />
+    <link href="../../css/structure/modules/infragistics.ui.tilemanager.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <!-- Modernizr/jQuery/jQuery UI -->
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+</head>
+<body>
+    <style type="text/css">
+        .dashboard {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+        #dashboard img {
+			width: 150px;
+			float: left;
+			margin-right: 10px;
+		}
+    </style>
+    <script src="../data-files/candidates.js"></script>
+    <div id="dashboard" class="dashboard">
+
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#dashboard').igTileManager({
+                layoutConfiguration: {
+                    gridLayout: {
+                        columnWidth: '25%',
+                        columnHeight: '50%',
+                        marginLeft: 10,
+                        marginTop: 10
+                    }
+                },
+                dataSource: dataSource,
+                contentTemplate: '<h3>${name}</h3><img src="${picture}" title="${name}" alt="error" /><p>${text}</p>' +
+                    '<div style="clear: both">Skills:</div>' +
+                    '<ul>{{each ${skills} }}<li>${skills.description}</li>{{/each}}</ul>' +
+                    '<div>LinkedIn: <a href="${linkedin}" target="_blank">http://www.linkedin.com/profile</a></div>'
+            });
+            $('#dashboard').find('ul').igTree();
+        });
+    </script>
+</body>
+</html>

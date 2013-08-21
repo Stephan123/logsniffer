@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+        $(function () {
+            var currData, currDataSource, doGeneration;
+
+            doGeneration = function () {
+                var num = 10, data = [];
+                for (var i = 0; i < num; i++) {
+                    var val1 = Math.round(Math.random() * 100);
+                    var val2 = Math.round(Math.random() * 100);
+                    var val3 = Math.round(Math.random() * 100);
+                    data[i] = { Label: i.toString(), Value1: val1, Value2: val2, Value3: val3 };
+                }
+                currData = data;
+                currDataSource = new $.ig.DataSource({ dataSource: currData });
+            }
+
+            doGeneration();
+
+            $("#columnChart").igDataChart({
+                width: "500px",
+                height: "500px",
+                dataSource: currDataSource,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    label: "Label"
+                }, {
+                    name: "yAxis",
+                    type: "numericY"
+                }],
+                series: [{
+                    name: "series1",
+                    title: "BMW",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1"
+                }, {
+                    name: "series2",
+                    title: "Audi",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2"
+                }, {
+                    name: "series3",
+                    title: "Mazda",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value3"
+                }]
+            });
+
+            $("#barChart").igDataChart({
+                width: "500px",
+                height: "500px",
+                dataSource: currDataSource,
+                legend: { element: "barLegend" },
+                axes: [{
+                    name: "xAxis",
+                    type: "numericX"
+                }, {
+                    name: "yAxis",
+                    type: "categoryY",
+                    label: "Label"
+                }],
+                series: [{
+                    name: "series1",
+                    title: "BMW",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1"
+                }, {
+                    name: "series2",
+                    title: "Audi",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2"
+                }, {
+                    name: "series3",
+                    title: "Mazda",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value3"
+                }]
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        td { vertical-align: top; }
+        .chartElement { margin-right: 10px; }
+    </style>
+
+    <table>
+        <tr>
+            <th>Column Chart</th><th>Bar Chart</th>
+        </tr>
+        <tr>
+            <td>
+                <div id="columnChart" class="chartElement"></div>
+            </td>
+            <td>
+                <div id="barChart" class="chartElement"></div>
+            </td>
+            <td>
+                <div id="barLegend"></div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style type="text/css">
+        .standard-grid {
+            margin-bottom: 20px;
+        }
+
+        #submitEvent, #formSubmit {
+            float: left;
+            margin-right: 20px;
+        }
+
+        #formSubmit {
+            float: left;
+        }
+    </style>
+    
+    <form id="validationForm">
+ 
+    <table class="standard-grid">
+								<tr>
+									<td>
+										<b>Text Editor</b>
+										<br />
+										<input type="text" id="textEditor" />
+									</td>
+									<td>
+										<b>Date Picker</b>
+										<br />
+										<input id="datePicker" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Mask: (000) 000-0000</b>
+										<br />
+										<input type="text" id="maskEditor1" />
+									</td>
+									<td>
+										<b>Mask: CCCCCCCCCC</b>
+										<br />
+										<input id="maskEditor2" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Numeric (signed byte)</b>
+										<br />
+										<input type="text" id="numericEditor" />
+									</td>
+									<td>
+										<b>Currency, range: 5..500</b>
+										<br />
+										<input id="currencyEditor" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Date: 1/1/1900..12/31/2200</b>
+										<br />
+										<input type="text" id="dateEditor" />
+									</td>
+									<td>&nbsp;</td>
+								</tr>
+							</table>
+							
+							
+							<div class="clearfix" style="width:100%">
+								<div style="width: 250px; float: left">
+									<input type="submit" class="required" value="Submit" id="submitEvent" />
+									<input type="button" class="required" id="formSubmit" value="Form Submit" />
+								</div>
+								<div style="float: left; padding-top: 5px">
+									<span id="formSubmitMessage" style="margin-left: 30px; color: red;">
+									</span>
+									<span id="submitMessage" style="margin-left: 30px; color: red;"></span>
+								</div>
+							</div>
+							<br />
+							<br />
+							<table id="mainTable" class="standard-grid">
+								<thead><tr><th colspan="2">Validation Options</th></tr></thead>
+								<tbody>
+									<tr>
+										<td style="width: 50%">
+											<input type="checkbox" id="requredCheckBox" />
+											Required
+										</td>
+										<td style="width: 50%">&nbsp;
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="onBlurCheckBox" class="validateOptions" checked="checked" />
+											Validate onblur
+										</td>
+										<td class="required">
+											<input type="checkbox" id="onChangeCheckBox" class="validateOptions" checked="checked" />
+											Validate onchange
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="onSubmitCheckBox" class="validateOptions" />
+											Validate on Submit
+										</td>
+										<td class="required">
+											<input type="checkbox" id="formSubmitCheckBox" class="validateOptions" />
+											Validate on FormSubmit
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											Keep Focus:
+											<select id="keepFocusList" class="validateOptions">
+												<option>never</option>
+												<option>once</option>
+												<option selected="selected">always</option>
+											</select>
+										</td>
+										<td class="required">
+											<input type="checkbox" id="showIconCheckBox" checked="checked" class="validateOptions" />
+											Show Icon
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											Show Animation (ms):
+											<input type="text" id="showAnimationDuration" class="validateOptions" value="300"
+												style="width: 50px" />
+										</td>
+										<td class="required">
+											Hide Animation (ms):
+											<input type="text" id="hideAnimationDuration" class="validateOptions" value="300"
+												style="width: 50px" />
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="showErrorCheckBox" class="validateOptions" />
+											Show all errors on submit
+										</td>
+										<td class="required">
+											Custom Error Message:
+											<input type="text" id="customErrorMessegeText" class="validateOptions" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+    <script>
+
+        function getShowAllErrorsOnSubmit() {
+            return $('#showErrorCheckBox').is(":checked") ? true : false;
+        }
+
+        function getRequired() {
+            return $('#requredCheckBox').is(":checked") ? true : false;
+        }
+
+        function getValidationOptions() {
+            var validatorOptions = {};
+            validatorOptions.onblur = $('#onBlurCheckBox').is(":checked");
+            validatorOptions.onchange = $('#onChangeCheckBox').is(":checked");
+            validatorOptions.onsubmit = $('#onSubmitCheckBox').is(":checked");
+            validatorOptions.formSubmit = $('#formSubmitCheckBox').is(":checked");
+            validatorOptions.keepFocus = $('#keepFocusList').val();
+            validatorOptions.showIcon = $('#showIconCheckBox').is(":checked") ? true : false;
+            $.ui.igValidator.defaults.showAllErrorsOnSubmit = getShowAllErrorsOnSubmit();
+            return validatorOptions;
+        }
+
+        function getErrorMessage() {
+            var message = $('#customErrorMessegeText').val();
+            return (message.length < 1) ? null : message;
+        }
+
+        $(function () {
+
+            $.ui.igValidator.defaults.showAllErrorsOnSubmit = getShowAllErrorsOnSubmit();
+            $('#textEditor').igEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                width: 195
+            });
+            $('#datePicker').igDatePicker({
+                width: 195,
+                dateInputFormat: 'dateTime',
+                nullText: 'Enter date',
+                required: getRequired(),
+                validatorOptions: getValidationOptions()
+            });
+            $('#maskEditor1').igMaskEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                width: 195,
+                inputMask: '(000) 000-0000'
+            });
+            $('#maskEditor2').igMaskEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                width: 195
+            });
+            $('#numericEditor').igNumericEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                dataMode: 'sbyte',
+                button: 'spin',
+                width: 195
+            });
+            $('#currencyEditor').igCurrencyEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                button: 'spin',
+                minValue: 5,
+                maxValue: 500,
+                width: 195
+            });
+            $('#dateEditor').igDateEditor({
+                validatorOptions: getValidationOptions(),
+                required: getRequired(),
+                button: 'spin',
+                minValue: new Date(1900, 0, 1),
+                maxValue: new Date(2200, 11, 31),
+                width: 195,
+                nullText: 'Enter date'
+            });
+            $('#hideAnimationDuration').igNumericEditor({
+                width: 50,
+                dataMode: 'ushort',
+                nullable: false,
+                valueChanged: function (evt, ui) {
+                    var opt = { 'animationHide': ui.value };
+                    $('#textEditor').igEditor('option', 'validatorOptions', opt);
+                    $('#maskEditor1').igMaskEditor('option', 'validatorOptions', opt);
+                    $('#maskEditor2').igMaskEditor('option', 'validatorOptions', opt);
+                    $('#numericEditor').igNumericEditor('option', 'validatorOptions', opt);
+                    $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', opt);
+                    $('#dateEditor').igDateEditor('option', 'validatorOptions', opt);
+                    $('#datePicker').igDatePicker('option', 'validatorOptions', opt);
+                }
+            });
+            $('#showAnimationDuration').igNumericEditor({
+                width: 50,
+                dataMode: 'ushort',
+                nullable: false,
+                valueChanged: function (evt, ui) {
+                    var opt = { 'animationShow': ui.value };
+                    $('#textEditor').igEditor('option', 'validatorOptions', opt);
+                    $('#maskEditor1').igMaskEditor('option', 'validatorOptions', opt);
+                    $('#maskEditor2').igMaskEditor('option', 'validatorOptions', opt);
+                    $('#numericEditor').igNumericEditor('option', 'validatorOptions', opt);
+                    $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', opt);
+                    $('#dateEditor').igDateEditor('option', 'validatorOptions', opt);
+                    $('#datePicker').igDatePicker('option', 'validatorOptions', opt);
+                }
+            });
+            $('#requredCheckBox').change(function () {
+                var required = getRequired();
+
+                if (required == false) {
+                    $('.validateOptions').attr('disabled', 'disabled');
+                }
+                else {
+                    $('.validateOptions').removeAttr('disabled');
+                }
+
+                $('#datePicker').igDatePicker('option', 'required', required);
+                $('#textEditor').igEditor('option', 'required', required);
+                $('#maskEditor1').igMaskEditor('option', 'required', required);
+                $('#maskEditor2').igMaskEditor('option', 'required', required);
+                $('#numericEditor').igNumericEditor('option', 'required', required);
+                $('#currencyEditor').igCurrencyEditor('option', 'required', required);
+                $('#dateEditor').igDateEditor('option', 'required', required);
+            });
+            $('.validateOptions').change(function () {
+                var validatorOptions = getValidationOptions();
+                $('#datePicker').igDatePicker('option', 'validatorOptions', validatorOptions);
+                $('#textEditor').igEditor('option', 'validatorOptions', validatorOptions);
+                $('#maskEditor1').igMaskEditor('option', 'validatorOptions', validatorOptions);
+                $('#maskEditor2').igMaskEditor('option', 'validatorOptions', validatorOptions);
+                $('#numericEditor').igNumericEditor('option', 'validatorOptions', validatorOptions);
+                $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', validatorOptions);
+                $('#dateEditor').igDateEditor('option', 'validatorOptions', validatorOptions);
+            });
+            $('#formSubmit').click(function () {
+                var message = "Form Submitting...";
+                $("#submitMessage").stop(true, true);
+                $("#formSubmitMessage").html(message).stop(true, true).fadeIn(500).fadeOut(2000);
+                var form = $("#validationForm")[0];
+                form.submit();
+            });
+            $('#customErrorMessegeText').blur(function () {
+                var message = { 'errorMessage': getErrorMessage() };
+                $('#datePicker').igDatePicker('option', 'validatorOptions', message);
+                $('#textEditor').igEditor('option', 'validatorOptions', message);
+                $('#maskEditor1').igMaskEditor('option', 'validatorOptions', message);
+                $('#maskEditor2').igMaskEditor('option', 'validatorOptions', message);
+                $('#numericEditor').igNumericEditor('option', 'validatorOptions', message);
+                $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', message);
+                $('#dateEditor').igDateEditor('option', 'validatorOptions', message);
+            });
+
+            $('#validationForm').submit(function () {
+                var message = "Submit event fired";
+                $("#formSubmitMessage").stop(true, true);
+                $("#submitMessage").html(message).stop(true, true).fadeIn(500).fadeOut(2000);
+            });
+
+            $("#formSubmit").igButton({ labelText: $("#formSubmit").val() });
+            $("#submitEvent").igButton({ labelText: $("#submitEvent").val() });
+
+            $('.validateOptions').attr('disabled', 'disabled');
+        });
+
+
+    </script>
+</form>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <!-- Target element for the igGrid -->   
+    <table id="grid"></table>
+
+    <!-- File supplying the northwindInvoices object for the igSparkline data source -->
+    <script src="../data-files/nw-customers-with-orders.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#grid").on("iggridrowsrendered", function (evt, ui) {
+
+                //get data collection
+                var dataSource = ui.owner.dataSource;
+
+                $(".order-sparkline").each(function(i) {                    
+
+                    $(this).igSparkline({
+                        dataSource: dataSource.findRecordByKey(
+                            $(this).data("id")).Orders,
+                        height: "24px",
+                        width: "100%",
+                        valueMemberPath: 'TotalPrice',
+                        labelMemberPath: 'OrderDate'
+                    })
+                    .css("background-color", "transparent");
+
+                });
+            });
+
+            $("#grid").igGrid({
+                dataSource: nwCustomersWithOrders,
+                autoGenerateColumns: false,
+                primaryKey: "ID",
+                rowTemplate: "<tr><td></td><td>${CompanyName}</td><td>${ContactName}</td>" +
+                    "<td>${ContactTitle}</td><td><div data-id='${ID}' class='order-sparkline'></div></td></tr>",
+                columns: [
+                    { key: "ID", hidden: true },
+                    { key: "CompanyName", headerText: "Company" },
+                    { key: "ContactName", headerText: "Contact" },
+                    { key: "ContactTitle", headerText: "Contact Title" },
+                    { key: "Orders", headerText: "Order History" }
+                ]
+            });
+
+        });
+    </script>
+
+</body>
+</html>

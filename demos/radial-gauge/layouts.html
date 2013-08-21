@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+
+</head>
+<body>
+    <table>
+		<tr>
+			<td style="padding-right:40px">Circular counterclockwise RadialGauge<div id="radialgauge1"></div></td>
+			<td style="padding-right:40px">Fitted semi-circular clockwise RadialGauge<div id="radialgauge2"></div></td>
+		</tr>
+		<tr>
+			<td style="padding-right:40px">Fitted RadialGauge with zero minor ticks<div id="radialgauge3"></div></td>
+			<td style="padding-right:40px">Circular RadialGauge with Ranges<div id="radialgauge4"></div></td>
+		</tr>
+	</table>
+    <script>
+
+        $(function () {
+            $("#radialgauge1").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                interval: 1,
+                labelInterval: 1,
+                value: 1,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: 0,
+                maximumValue: 10,
+                backingShape: "circular",
+               /* backingOutline: "black",
+                backingBrush: "lightblue",*/
+                backingStrokeThickness: 1,
+               /* scaleBrush: "pink",*/
+                scaleStartAngle: 360,
+                scaleEndAngle: 0,
+                scaleStartExtent: 0.3,
+                scaleEndExtent: 0.55,
+                scaleOversweep: 0,
+                tickStartExtent: 0.62,
+                tickEndExtent: 0.69,
+                tickBrush: "black",
+                minorTickBrush: "grey",
+                minorTickStartExtent: 0.65,
+                minorTickEndExtent: 0.69,
+                minorTickCount: 4,
+                labelExtent: 0.75,
+                fontBrush: "black",
+                needleShape: "trapezoidWithBulb",
+               /* needleBrush: "yellow",
+                needleOutline: "red",*/
+                needleStartExtent: -0.2,
+                needleEndExtent: 0.7,
+                needleBaseFeatureExtent: 0.06,
+                needleBaseFeatureWidthRatio: 0.13,
+                needlePointFeatureExtent: 0.5,
+                needlePointFeatureWidthRatio: 0.06,
+                needlePivotWidthRatio: 0.15,
+                needlePivotInnerWidthRatio: 0.05,
+                needlePivotShape: "circleOverlay",
+                /*needlePivotBrush: "red",
+                needlePivotOutline: "maroon",*/
+                transitionDuration: 0,
+                scaleSweepDirection: "counterclockwise"
+            });            
+
+            $("#radialgauge2").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                interval: 1,
+                labelInterval: 1,
+                value: 2,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: 0,
+                maximumValue: 10,
+                backingShape: "fitted",
+               /* backingOutline: "black",
+                backingBrush: "white",*/
+                backingStrokeThickness: 1,
+                backingOversweep: 4,
+               /* scaleBrush: "yellow",*/
+                scaleStartAngle: 180,
+                scaleEndAngle: 0,
+                scaleStartExtent: 0.45,
+                scaleEndExtent: 0.81,
+                scaleOversweep: 0,
+                tickStartExtent: 0.59,
+                tickEndExtent: 0.66,
+                /*tickBrush: "darkblue",*/
+               /* minorTickBrush: "grey",*/
+                minorTickStartExtent: 0.62,
+                minorTickEndExtent: 0.66,
+                minorTickCount: 4,
+                labelExtent: 0.74,
+                fontBrush: "#333333",
+                needleShape: "rectangle",
+               /* needleBrush: "green",
+                needleOutline: "maroon",*/
+                needleStartExtent: 0,
+                needleEndExtent: 0.65,
+                needlePivotShape: "circleWithHole",
+                needlePivotWidthRatio: 0.15,
+                needlePivotInnerWidthRatio: 0.05,
+                transitionDuration: 0,
+                scaleSweepDirection: "clockwise"
+            });
+
+            $("#radialgauge3").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                interval: 1,
+                labelInterval: 1,
+                value: 5,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: 0,
+                maximumValue: 10,
+                /*backingShape: "fitted",
+                backingOutline: "black",
+                backingBrush: "blanchedalmond",*/
+                backingCornerRadius: "10",
+                backingOuterExtent: .9,
+                backingInnerExtent: .2,
+                backingOversweep: 4,
+                backingStrokeThickness: 1.5,
+               /* scaleBrush: "lightgrey",*/
+                scaleStartAngle: 130,
+                scaleEndAngle: 50,
+                scaleStartExtent: 0.5,
+                scaleEndExtent: 0.81,
+                scaleOversweep: 0,
+                tickStartExtent: 0.62,
+                tickEndExtent: 0.69,
+               /* tickBrush: "darkblue",*/
+                minorTickCount: 0,
+                labelExtent: 0.75,
+                fontBrush: "black",
+                needleShape: "triangle",
+               /* needleBrush: "blue",
+                needleOutline: "maroon",*/
+                needleStartExtent: 0,
+                needleEndExtent: 0.5,
+                needlePivotShape: "circleUnderlay",
+               /* needlePivotBrush: "#494949",*/
+                transitionDuration: 0,
+                scaleSweepDirection: "clockwise"
+            });
+
+            $("#radialgauge4").igRadialGauge({
+                height: "300px",
+                width: "300px",
+                interval: 1,
+                labelInterval: 2,
+                value: 0,
+                centerX: 0.5,
+                centerY: 0.5,
+                minimumValue: -10,
+                maximumValue: 10,
+                backingShape: "circular",
+                /*backingOutline: "black",*/
+                /*backingBrush: "white",*/
+                backingStrokeThickness: 2,
+                /*scaleBrush: "lightgrey",*/
+                scaleStartAngle: 20,
+                scaleEndAngle: 340,
+                scaleStartExtent: 0.38,
+                scaleEndExtent: 0.78,
+                scaleOversweep: 0.2,
+                tickStartExtent: 0.62,
+                tickEndExtent: 0.69,
+                /*tickBrush: "black",*/
+                /*minorTickBrush: "grey",*/
+                minorTickStartExtent: 0.65,
+                minorTickEndExtent: 0.69,
+                minorTickCount: 2,
+                labelExtent: 0.75,
+                fontBrush: "#333333",
+                needleStartExtent: -0.1,
+                needleEndExtent: 0.7,
+                needleShape: "needle",
+               /* needleBrush: "red",*/
+               /* needleOutline: "maroon",*/
+                needlePivotShape: "none",
+                needlePivotBrush: "darkorange",
+                transitionDuration: 0,
+                scaleSweepDirection: "clockwise",
+                ranges: [
+                        {
+                            name: "range1",
+                            startValue: -10,
+                            endValue: -7.5,
+                            outerStartExtent: .6,
+                            outerEndExtent: .57,
+                            innerStartExtent: 0.4,
+                            innerEndExtent: 0.4,
+                            strokeThickness: 0.8,
+                           /* outline: "black",*/
+                            brush: "#A4bA29"
+                        },
+                        {
+                            name: "range2",
+                            startValue: -7.5,
+                            endValue: -1.5,
+                            outerStartExtent: .57,
+                            outerEndExtent: .55,
+                            innerStartExtent: 0.4,
+                            innerEndExtent: 0.4,
+                            strokeThickness: 0,
+                            /* outline: "black",*/
+                            brush: "#FDBD48"
+                        },
+                        {
+                            name: "range3",
+                            startValue: -1.5,
+                            endValue: 1.5,
+                            outerStartExtent: .55,
+                            outerEndExtent: .55,
+                            innerStartExtent: 0.4,
+                            innerEndExtent: 0.4,
+                            strokeThickness: 0,
+                            /*outline: "black",*/
+                            brush: "#f79036"
+                        },
+                        {
+                            name: "range4",
+                            startValue: 1.5,
+                            endValue: 7.5,
+                            outerStartExtent: .55,
+                            outerEndExtent: .57,
+                            innerStartExtent: 0.4,
+                            innerEndExtent: 0.4,
+                            strokeThickness: 0,
+                            /* outline: "black",*/
+                            brush: "#FF6A6F"
+                        },
+                        {
+                            name: "range5",
+                            startValue: 7.5,
+                            endValue: 10,
+                            outerStartExtent: .57,
+                            outerEndExtent: .6,
+                            innerStartExtent: 0.4,
+                            innerEndExtent: 0.4,
+                            strokeThickness: 0,
+                            /* outline: "black",*/
+                            brush: "#D3404B"
+                        }
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

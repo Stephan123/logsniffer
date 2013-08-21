@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <link href="../css/charts/chart-samples.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript">
+        var data = [
+            { Budget: 30, Department: "Administration" },
+            { Budget: 50, Department: "Sales" },
+            { Budget: 60, Department: "IT" },
+            { Budget: 50, Department: "Marketing" },
+            { Budget: 100, Department: "Development" },
+            { Budget: 20, Department: "Support" }
+        ];
+
+        $(function () {
+            //  Create a basic funnel chart
+            $("#chartNormal").igFunnelChart({
+                width: "100%",  //"325px",
+                height: "450px",
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible"
+            });
+
+            //  Create a funnel chart with weighted size slices
+            $("#chartWeighted").igFunnelChart({
+                width: "100%",  //"325px",
+                height: "450px",
+                leftMargin: 20,
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible",
+                funnelSliceDisplay: "weighted"
+            });
+
+            //  Create an inverted funnel chart
+            $("#chartInverted").igFunnelChart({
+                width: "100%",  //"325px",
+                height: "450px",
+                leftMargin: 20,
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible",
+                isInverted: true
+            });
+        });
+    </script>
+
+    <div class="sampleContent">
+        <div class="chartContainer">
+            <h4>Funnel Chart</h4>
+            <div id="chartNormal"></div>
+        </div>
+        <div class="chartContainer">
+            <h4>Weighted Slices</h4>
+            <div id="chartWeighted"></div>
+        </div>
+        <div class="chartContainer">
+            <h4>Inverted Funnel Chart</h4>
+            <div id="chartInverted"></div>
+        </div>
+    </div>
+</body>
+</html>

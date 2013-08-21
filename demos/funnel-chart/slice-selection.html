@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-ui.min.js" type="text/javascript"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js" type="text/javascript" type="text/javascript"></script>
+    <script src="../../js/infragistics.lob.js" type="text/javascript" type="text/javascript"></script>
+    <script src="../../js/infragistics.dv.js" type="text/javascript" type="text/javascript"></script>
+
+</head>
+<body>
+    <link href="../css/charts/chart-samples.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var data = [
+            { Budget: 30, Department: "Administration" },
+            { Budget: 50, Department: "Sales" },
+            { Budget: 60, Department: "IT" },
+            { Budget: 50, Department: "Marketing" },
+            { Budget: 100, Department: "Development" },
+            { Budget: 20, Department: "Support" }
+        ];
+        var selectedSlices = [];
+
+        $(function () {
+            //  Create a funnel chart with slice selection allowed and an event handler for 
+            //  the sliceClicked event. The styles for selected and unselected slices from
+            //  infragistics.theme.css file are used and redefined in the <style> node of the page.
+            $("#chart").igFunnelChart({
+                width: "100%",
+                height: "500px",
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible",
+                allowSliceSelection: true,
+                useUnselectedStyle: true,
+                sliceClicked: function (evt, ui) {
+                    if (ui.selected) {
+                        selectedSlices.push(ui.item);
+                    }
+                    else {
+                        selectedSlices.removeItem(ui.item);
+                    }
+                    $("#selectedSlicesGrid").igGrid("dataBind");
+                }
+            });
+
+            //  Create a funnel chart with slice selection allowed and custom styles for selected and
+            //  unselected slices defined in the selectedSliceStyle & unselectedSliceStyle options.
+            $("#chartCustom").igFunnelChart({
+                width: "100%",
+                height: "500px",
+                dataSource: data,
+                valueMemberPath: "Budget",
+                innerLabelMemberPath: "Budget",
+                innerLabelVisibility: "visible",
+                outerLabelMemberPath: "Department",
+                outerLabelVisibility: "visible",
+                allowSliceSelection: true,
+                useUnselectedStyle: true,
+                selectedSliceStyle: {
+                    fill: "lightblue",
+                    stroke: "black"
+                },
+                unselectedSliceStyle: {
+                    fill: "lightgrey",
+                    stroke: "grey"
+                }
+            });
+
+            //  Instantiate the selected slices grid
+            $("#selectedSlicesGrid").igGrid({
+                width: "250px",
+                dataSource: selectedSlices,
+                columns: [
+                    { key: "Department", headerText: "Department", width: "130px" },
+                    { key: "Budget", headerText: "Budget", width: "70px" }
+                ]
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        /* 
+            Redefine the styles from infragistics.theme.css that configure the appearance of 
+            selected and unselected slices.
+        */
+
+        .ui-funnel-slice-selected
+        {
+            opacity: 1;
+        }
+        .ui-funnel-slice-unselected
+        {
+            opacity: 0.4;
+            border: 1px solid black;
+        }
+    </style>
+
+    <div class="sampleContent">
+        <div class="chartContainer">
+            <h4>Selection with Built-In Styles</h4>
+            <div id="chart"></div>
+        </div>
+        <div class="chartContainer">
+            <h4>Selected Slices</h4>
+            <table id="selectedSlicesGrid"></table>
+        </div>
+        <div class="chartContainer">
+            <h4>Selection with Custom Styles</h4>
+            <div id="chartCustom"></div>
+        </div>
+    </div>
+</body>
+</html>

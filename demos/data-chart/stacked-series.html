@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <style>
+        .chart {
+            display: inline-block;
+            margin: 0 10px 10px 0;
+        }
+            .chart h4 {
+                margin-bottom:5px;
+            }
+    </style>
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+
+    <div class="chart">
+        <h4>Stacked Bar</h4>
+        <div id="stackedBar"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Bar</h4>
+        <div id="stacked100Bar"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked Area</h4>
+        <div id="stackedArea"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked Column</h4>
+        <div id="stackedColumn"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked Line</h4>
+        <div id="stackedLine"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked Spline</h4>
+        <div id="stackedSpline"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked Spline Area</h4>
+        <div id="stackedSplineArea"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Area</h4>
+        <div id="stacked100Area"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Column</h4>
+        <div id="stacked100Column"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Line</h4>
+        <div id="stacked100Line"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Spline</h4>
+        <div id="stacked100Spline"></div>
+    </div>
+    <div class="chart">
+        <h4>Stacked 100 Spline Area</h4>
+        <div id="stacked100SplineArea"></div>
+    </div>
+
+
+    <script>
+
+        $(function () {
+
+            var getData = function (num) {
+                var data = [];
+                for (var i = 0; i < num; i++) {
+                    var val1 = Math.round(Math.random() * 100);
+                    var val2 = Math.round(Math.random() * 100);
+                    var val3 = Math.round(Math.random() * 100);
+                    data[i] = { Year: "200" + (i + 1), BMW: val1, Audi: val2, Mazda: val3 };
+                }
+                return data;
+            };
+
+            var data = getData(9);
+
+            function generateCategoryYChart(chartType) {
+
+                var selector = "#" + chartType;
+
+                $(selector).igDataChart({
+                    dataSource: data,
+                    height: "400px",
+                    width: "400px",
+                    axes: [{
+                        name: "Year",
+                        type: "categoryY",
+                        label: "Year"
+                    }, {
+                        name: "Volume",
+                        type: "numericX"
+                    }],
+                    series: [{
+                        name: "parent",
+                        type: chartType,
+                        xAxis: "Volume",
+                        yAxis: "Year",
+                        series: [{
+                            name: "BMW",
+                            title: "BMW",
+                            type: "stackedFragment",
+                            showTooltip: true,
+                            tooltipTemplate: "BMW",
+                            valueMemberPath: "BMW"
+                        }, {
+                            name: "Audi",
+                            title: "Audi",
+                            type: "stackedFragment",
+                            showTooltip: true,
+                            tooltipTemplate: "Audi",
+                            valueMemberPath: "Audi"
+                        }, {
+                            name: "Mazda",
+                            title: "Mazda",
+                            showTooltip: true,
+                            tooltipTemplate: "Mazda",
+                            type: "stackedFragment",
+                            valueMemberPath: "Mazda"
+                        }]
+                    }],
+                    horizontalZoomable: true,
+                    verticalZoomable: true,
+                    windowResponse: "immediate"
+                });
+            }
+
+            function generateCategoryXChart(chartType) {
+
+                var selector = "#" + chartType;
+
+                $(selector).igDataChart({
+                    dataSource: data,
+                    height: "400px",
+                    width: "400px",
+                    axes: [{
+                        name: "Year",
+                        type: "categoryX",
+                        label: "Year"
+                    },
+                    {
+                        name: "Volume",
+                        type: "numericY"
+                    }],
+                    series: [{
+                        name: "parent",
+                        xAxis: "Year",
+                        yAxis: "Volume",
+                        type: chartType,
+                        series: [{
+                            name: "BMW",
+                            title: "BMW",
+                            type: "stackedFragment",
+                            showTooltip: true,
+                            tooltipTemplate: "BMW",
+                            valueMemberPath: "BMW"
+                        }, {
+                            name: "Audi",
+                            title: "Audi",
+                            type: "stackedFragment",
+                            showTooltip: true,
+                            tooltipTemplate: "Audi",
+                            valueMemberPath: "Audi"
+                        }, {
+                            name: "Mazda",
+                            title: "Mazda",
+                            showTooltip: true,
+                            tooltipTemplate: "Mazda",
+                            type: "stackedFragment",
+                            valueMemberPath: "Mazda"
+                        }]
+                    }]
+                });
+            };
+
+            generateCategoryYChart("stackedBar");
+            generateCategoryYChart("stacked100Bar");
+            generateCategoryXChart("stackedArea");
+            generateCategoryXChart("stackedColumn");
+            generateCategoryXChart("stackedLine");
+            generateCategoryXChart("stackedSpline");
+            generateCategoryXChart("stackedSplineArea");
+            generateCategoryXChart("stacked100Area");
+            generateCategoryXChart("stacked100Column");
+            generateCategoryXChart("stacked100Line");
+            generateCategoryXChart("stacked100Spline");
+            generateCategoryXChart("stacked100SplineArea");
+        });
+
+    </script>
+
+</body>
+</html>

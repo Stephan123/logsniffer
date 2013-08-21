@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+    
+    <!-- Used to style the API Viewer and Explorer UI -->
+    <link href="../css/apiviewer.css" rel="stylesheet" type="text/css" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+            
+    <!-- Used to add markup and provide logging 
+        functionality for the API Explorer and API Viewer UI -->
+    <script src="../js/apiviewer.js"></script>   
+</head>
+<body>
+
+    <style>
+        #datePickerForm h4 {
+            margin-bottom: .5em;
+        }
+    </style>
+
+    <form id="datePickerForm">
+
+        <h4>Validate On Blur and On Submit, Retain Focus</h4>
+        <div id="datePicker"></div>
+        <h4>Validate On Value Change and On Submit</h4>
+        <div id="datePicker2"></div>            
+
+        <!-- Begin: API UI -->
+        <div class="api-explorer">
+            <button id="btnFormSubmit">Submit Form</button><span>form.submit();</span>
+        </div>
+        <!-- End: API UI -->
+    </form>
+    
+    <script>
+
+        $(function () {
+
+            // Used to show output in the API Viewer at runtime, 
+            // defined in external script 'apiviewer.js'           
+            var apiViewer = new $.ig.apiViewer();
+            
+            /*----------------- Method & Option Examples -------------------------*/
+
+            // {Button Label} button click handler
+            $("#btnFormSubmit").click(function (e) {
+                
+                var form = $("#datePickerForm")[0];
+                form.submit();
+
+            });
+
+            /*----------------- Instantiation -------------------------*/
+
+            $('#datePicker').igDatePicker({
+                width: 280,
+                dateInputFormat: 'dateTime',
+                required: true,
+                validatorOptions: {
+                    onblur: true,
+                    onchange: false,
+                    onsubmit: true,
+                    formSubmit: true,
+                    keepFocus: "always",
+                    showIcon: true
+                }
+            });
+
+            $('#datePicker2').igDatePicker({
+                width: 280,
+                dateInputFormat: 'dateTime',
+                required: true,
+                validatorOptions: {
+                    onblur: false,
+                    onchange: true,
+                    onsubmit: true,
+                    formSubmit: true,
+                    keepFocus: "never",
+                    showIcon: false
+                }
+            });
+
+        });
+
+    </script>  
+</body>
+</html>

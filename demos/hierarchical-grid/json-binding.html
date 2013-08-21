@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="hierarchicalGrid"></table>
+
+    <script>
+
+        $(function () {
+
+            var data = [
+                {
+                    Name: "Food", 
+                    Products: [
+                        { Name: "Bread", Quantity: 3 },
+                        { Name: "Pizza", Quantity: 4 }
+                    ]
+                },
+                {
+                    Name: "Beverages",
+                    Products: [
+                        { Name: "Milk", Quantity: 1 },
+                        { Name: "Fruit punch", Quantity: 4 }
+                    ]
+                }
+            ];
+
+            $("#hierarchicalGrid").igHierarchicalGrid({
+                width: "600px",
+                dataSource: data, //Array of objects defined above
+                autoGenerateLayouts: true
+            });
+
+        });
+    </script>
+
+</body>
+</html>

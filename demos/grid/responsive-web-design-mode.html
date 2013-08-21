@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+    </style>
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="grid"></table>
+    <script>
+        $(function () {
+            $("#grid").igGrid({
+                columns: [
+                    { headerText: "Customer ID", key: "ID", dataType: "string" },
+                    { headerText: "Company Name", key: "CompanyName", dataType: "string" },
+                    { headerText: "Contact Name", key: "ContactName", dataType: "string" },
+                    { headerText: "Contact Title", key: "ContactTitle", dataType: "string" },
+                    { headerText: "Address", key: "Address", dataType: "string" },
+                    { headerText: "City", key: "City", dataType: "string" },
+                    { headerText: "Country", key: "Country", dataType: "string" }
+                ],
+                autoGenerateColumns: false,
+                dataSource: nwCustomersWithOrders,
+                width: "100%",
+                height: "100%",
+                features: [
+                    {
+                        name: "Responsive",
+                        columnSettings: [
+                            {
+                                columnKey: "ID",
+                                configuration: {
+                                    customPhone: {
+                                        hidden: true
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            },
+                            {
+                                columnKey: "ContactName",
+                                configuration: {
+                                    customPhone: {
+                                        hidden: true
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            },
+                            {
+                                columnKey: "ContactTitle",
+                                configuration: {
+                                    customPhone: {
+                                        hidden: true
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            },
+                            {
+                                columnKey: "Address",
+                                configuration: {
+                                    customPhone: {
+                                        template: "${Address}, ${City}, ${Country}"
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            },
+                            {
+                                columnKey: "City",
+                                configuration: {
+                                    customPhone: {
+                                        hidden: true
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            },
+                            {
+                                columnKey: "Country",
+                                configuration: {
+                                    customPhone: {
+                                        hidden: true
+                                    },
+                                    customAlt: {
+                                        hidden: false
+                                    }
+                                }
+                            }
+                        ],
+                        responsiveModes: {
+                            customPhone: {
+                                minWidth: 0,
+                                maxWidth: 500
+                            },
+                            // alternative mode
+                            customAlt: {
+                                minWidth: 501,
+                                maxWidth: Number.MAX_VALUE
+                            }
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <script src="../data-files/nw-customers-with-orders.js"></script>
+</body>
+</html>

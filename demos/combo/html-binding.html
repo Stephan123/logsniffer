@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <!-- The igCombo can bind to the a SELECT element and use
+    the HTML OPTION elements as combo's dataSource. Furthermore,
+    The OPTION element's value attribute is used for the widget's
+    valueKey -->
+    <select id="combo">
+        <option value="1">John Smith</option>
+        <option value="2">Mary Johnson</option>
+        <option value="3">Bob Ferguson</option>
+    </select>
+
+    <script>
+        $(function () {
+            
+            //The igCombo is bound to the SELECT and OPTION elements
+            //defined above
+            $("#combo").igCombo();
+        });
+    </script>
+
+</body>
+</html>

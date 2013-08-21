@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script id="tooltipTemplate1" type="text/x-jquery-tmpl">
+        <div id="tooltip" class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value1}</span>
+        </div>
+    </script>
+
+    <script id="tooltipTemplate2" type="text/x-jquery-tmpl">
+        <div id="Div1" class="shadow ui-widget-content ui-corner-all">
+            <span id="Span1">Value: ${item.Value2}</span>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var currData, currDataSource, doGeneration;
+
+            doGeneration = function () {
+                var num = 20, data = [], curr1 = 10, curr2 = 8;
+                for (var i = 0; i < num; i++) {
+                    if (Math.random() > .5) {
+                        curr1 += Math.random() * 2.0;
+                    } else {
+                        curr1 -= Math.random() * 2.0;
+                    }
+                    if (Math.random() > .5) {
+                        curr2 += Math.random() * 2.0;
+                    } else {
+                        curr2 -= Math.random() * 2.0;
+                    }
+
+                    var val1 = Math.round(curr1 * 1000.0) / 1000.0;
+                    var val2 = Math.round(curr2 * 1000.0) / 1000.0;
+
+                    data[i] = { Label: i.toString(), Value1: val1, Value2: val2 };
+                }
+                currData = data;
+                currDataSource = new $.ig.DataSource({ dataSource: currData });
+            }
+
+            doGeneration();
+
+            $("#chart").igDataChart({
+                width: "700px",
+                height: "400px",
+                dataSource: currDataSource,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    label: "Label"
+                },
+                {
+                    name: "yAxis",
+                    type: "numericY"
+                }],
+                series: [{
+                    name: "series1",
+                    type: "line",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate1",
+                    thickness: 5
+                }, {
+                    name: "series2",
+                    type: "line",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate2",
+                    thickness: 5
+                }],
+                horizontalZoomable: true,
+                verticalZoomable: true,
+                windowResponse: "immediate"
+            });
+
+            $("#seriesType").change(function (e) {
+                var thickness = 5,
+                    seriesType = $(this).val();
+
+                if (seriesType == "area" ||
+                    seriesType == "splineArea" ||
+                    seriesType == "column" ||
+                    seriesType == "waterfall" ||
+                    seriesType == "stepArea") {
+                    thickness = 1;
+                }
+
+                $("#chart").igDataChart("option", "series", [{ name: "series1", remove: true }]);
+                $("#chart").igDataChart("option", "series", [{ name: "series2", remove: true }]);
+                $("#chart").igDataChart("option", "series", [{
+                    name: "series1",
+                    type: $(this).val(),
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate1",
+                    thickness: thickness
+                }]);
+                $("#chart").igDataChart("option", "series", [{
+                    name: "series2",
+                    type: $(this).val(),
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate2",
+                    thickness: thickness
+                }]);
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        #chart
+        {
+            position: relative;
+            float: left;
+            margin-right: 10px;
+        }
+        
+        .selectionOptions
+        {
+            margin-bottom: 10px;   
+        }
+    </style>
+
+    <div class="selectionOptions" >
+        Series type:&nbsp
+        <select id="seriesType">
+            <option value="area">Area</option>
+            <option value="column">Column</option>
+            <option value="line" selected="selected">Line</option>
+            <option value="splineArea">Spline Area</option>
+            <option value="spline">Spline</option>
+            <option value="stepArea">Step Area</option>
+            <option value="stepLine">Step Line</option>
+            <option value="waterfall">Waterfall</option>
+            <option value="point">Point (New)</option>
+        </select>
+    </div>
+
+    <div id="chart"></div>
+</body>
+</html>

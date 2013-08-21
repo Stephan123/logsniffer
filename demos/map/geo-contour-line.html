@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#map").igMap({
+                width: "700px",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../images/samples/maps/world.png",
+                series: [{
+                    type: "geographicContourLine",
+                    name: "precipitation",
+                    fillScale: {
+                        type: "value",
+                        brushes: ["#3300CC", "#4775FF", "#0099CC", "#00CC99", "#33CC00", "#99CC00", "#CC9900", "#FFC20A", "#CC3300"]
+                    },
+                    triangleVertexMemberPath1: "v1",
+                    triangleVertexMemberPath2: "v2",
+                    triangleVertexMemberPath3: "v3",
+                    longitudeMemberPath: "pointX",
+                    latitudeMemberPath: "pointY",
+                    valueMemberPath: "value",
+                    triangulationDataSource: "../data-files/shapes/nws_precip_2011091820.itf"
+                }],
+                windowResponse: "deferred",
+                windowRect: {
+                    left: 0.31,
+                    top: 0.375,
+                    height: 0.025,
+                    width: 0.025
+                }
+            });
+        });
+    </script>
+
+    <div id="map"></div>
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">must be hosted on a web server</span> to work as expected.</div></body>
+</html>

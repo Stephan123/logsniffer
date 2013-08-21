@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <!-- Used to style the API Viewer and Explorer UI -->
+    <link href="../css/apiviewer.css" rel="stylesheet" type="text/css" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+    <!-- Used to add markup and provide logging 
+        functionality for the API Explorer and API Viewer UI -->
+    <script src="../js/apiviewer.js"></script>
+
+</head>
+<body>
+
+    <div class="api-explorer">
+        <fieldset id="gridOptions">
+            <legend>Grid api settings</legend>
+            <input type="button" id="igButtonDataBind" value="Databind" style="margin-bottom: 20px;" />
+            <br />
+            <label for="rows">Select Row:  </label>
+            <select id="rows"></select>
+            <input type="button" id="igButtonGetRowIndex" value="Get Row Index" />
+
+            <label for="columns" style="margin-left: 20px;">Select Column:  </label>
+            <select id="columns"></select>
+            <input type="button" id="igButtonGetCellText" value="Get Cell Text" />
+        </fieldset>
+
+        <br />
+        <br />
+
+        <fieldset id="filteringOptions">
+            <legend>Filtering settings</legend>
+            <select id="filterColumn">
+            </select>
+
+            <select id="cond_list">
+                <option class="numberCondition" value='equals'>equals</option>
+                <option class="numberCondition" value='doesNotEqual'>doesNotEqual</option>
+                <option class="numberCondition" value='lessThan'>lessThan</option>
+                <option class="numberCondition" value='greaterThan'>greaterThan</option>
+                <option class="stringCondition" value='startsWith'>startsWith</option>
+                <option class="stringCondition" value='endsWith'>endsWith</option>
+                <option class="stringCondition" value='contains'>contains</option>
+                <option class="stringCondition" value='doesNotContain'>doesNotContain</option>
+                <option class="stringCondition" value='empty'>empty</option>
+                <option class="stringCondition" value='notEmpty'>notEmpty</option>
+                <option class="dateCondition" value='on'>on</option>
+                <option class="dateCondition" value='notOn'>notOn</option>
+                <option class="dateCondition" value='before'>before</option>
+                <option class="dateCondition" value='after'>after</option>
+                <option class="dateCondition" value='today'>today</option>
+                <option class="dateCondition" value='yesterday'>yesterday</option>
+                <option class="dateCondition" value='lastMonth'>lastMonth</option>
+                <option class="dateCondition" value='nextMonth'>nextMonth</option>
+                <option class="dateCondition" value='thisMonth'>thisMonth</option>
+                <option class="dateCondition" value='lastYear'>lastYear</option>
+                <option class="dateCondition" value='thisYear'>thisYear</option>
+                <option class="dateCondition" value='nextYear'>nextYear</option>
+            </select>
+
+            <input style="width: 100px" id="filterExpr" />
+            <input type="button" id="igButtonFilter" value="Filter" />
+        </fieldset>
+
+        <br />
+        <br />
+        <fieldset id="selectionOptions">
+            <legend>Selection settings</legend>
+            <label for="RowSelect">Select Row Index:  </label>
+            <select id="RowSelect"></select>
+            <input type="button" id="SelectRow" value="Select Row" />
+            <input type="button" id="GetSelectedRows" value="Get Selected Rows" />
+        </fieldset>
+
+        <br />
+        <br />
+        <fieldset id="pagingOptions">
+            <legend>Paging settings</legend>
+            <label for="PageIndexSelect">Select Page Index:</label>
+            <select id="PageIndexSelect">
+            </select>
+            <label for="PageSizeSelect" style="margin-left: 20px;">Select Page Size:</label>
+            <select id="PageSizeSelect">
+                <option>2</option>
+                <option selected="selected">5</option>
+                <option>10</option>
+            </select>
+        </fieldset>
+    </div>
+
+    <!--Sample JSON Data-->
+    <script src="../data-files/northwind.js"></script>
+
+    <!-- Target element for the igGrid -->
+    <table id="grid1">
+    </table>
+
+    <div class="api-viewer"></div>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            // Used to show output in the API Viewer at runtime, 
+            // defined in external script 'apiviewer.js'    
+            var apiViewer = new $.ig.apiViewer();
+
+            /*----------------- Method & Option Examples -------------------------*/
+
+            // process events of select options
+            $("#PageSizeSelect").on({
+                change: function (e) {
+                    $('#grid1').igGridPaging('pageSize', parseInt($(e.srcElement).val()));
+                    AddPageOptions(parseInt($(e.srcElement).val()));
+                }
+            });
+
+            $("#PageIndexSelect").on({
+                change: function (e) {
+                    $('#grid1').igGridPaging('pageIndex', parseInt($(e.srcElement).val()));
+                }
+            });
+
+            $("#filterColumn").on({
+                change: function (e) {
+                    SetFilterConditions();
+                }
+            });
+
+            // process events of buttons
+            $('#igButtonFilter').on({
+                click: function (event) {
+                    var expr = $("#filterExpr").val(),
+                        condition = $("#cond_list").val(),
+                        filterColumn = $("#filterColumn").val();
+                    $("#grid1").igGridFiltering("filter", ([{ fieldName: filterColumn, expr: expr, cond: condition }]));
+                }
+            });
+
+            $('#SelectRow').on({
+                click: function (event) {
+                    $('#grid1').igGridSelection('selectRow', parseInt($('#RowSelect').val()));
+                }
+            });
+
+            $('#GetSelectedRows').on({
+                click: function (event) {
+                    var rows = $("#grid1").igGridSelection("selectedRows");
+                    apiViewer.log('The number of selected rows is:' + rows.length);
+                    $.each(rows, function (i, val) {
+                        apiViewer.log('Row with index ' + val.index + ' is selected');
+                    });
+                }
+            });
+
+            $("#igButtonDataBind").on({
+                click: function (e) {
+                    $("#grid1").igGrid('dataBind');
+                }
+            });
+
+            $("#igButtonGetRowIndex").on({
+                click: function (e) {
+                    var rowIndex = parseInt($('#rows').val()) - 1,
+                         row = $("#grid1").igGrid('rowAt', rowIndex);
+                    if ($(row).length)
+                        apiViewer.log('Row Index: ' + rowIndex);
+                }
+            });
+
+            $("#igButtonGetCellText").on({
+                click: function (e) {
+                    var cell = $("#grid1").igGrid('cellAt', parseInt($('#columns').val()) - 1, parseInt($('#rows').val()) - 1);
+                    apiViewer.log('Cell Text: ' + $(cell).text());
+                }
+            });
+
+            /*----------------- Event Examples -------------------------*/
+
+            $("#grid1").on("iggridselectionrowselectionchanging", function (evt, ui) {
+                var message = "iggridselectionrowselectionchanging";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridselectionactiverowchanged", function (evt, ui) {
+                var message = "iggridselectionactiverowchanged";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridfilteringdatafiltering", function (evt, ui) {
+                var message = "iggridfilteringdatafiltering";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridrendering", function (evt, ui) {
+                var message = "iggridrendering";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggriddatabinding", function (evt, ui) {
+                var message = "iggriddatabinding";
+                apiViewer.log(message);
+            });
+
+            /*----------------- Instantiation -------------------------*/
+
+            $("#grid1").igGrid({
+                autoGenerateColumns: false,
+                renderCheckboxes: true,
+                primaryKey: "EmployeeID",
+                columns: [{
+                    // note: if primaryKey is set and data in primary column contains numbers,
+                    // then the dataType: "number" is required, otherwise, dataSource may misbehave
+                    headerText: "Employee ID", key: "EmployeeID", width: "100px", dataType: "number"
+                }, {
+                    headerText: "First Name", key: "FirstName", width: "130px"
+                }, {
+                    headerText: "Last Name", key: "LastName", width: "100px"
+                }, {
+                    headerText: "Title", key: "Title", width: "150px"
+                }, {
+                    headerText: "Birth Date", key: "BirthDate", width: "120px", dataType: "date"
+                }, {
+                    headerText: "Postal Code", key: "PostalCode", width: "150px", dataType: "number"
+                }, {
+                    headerText: "Country", key: "Country", width: "150px", dataType: "string"
+                }
+                ],
+                dataSource: northwind,
+                dataSourceType: "json",
+                responseDataKey: "results",
+                height: "700px",
+                tabIndex: 1,
+                features: [
+                    {
+                        name: "Selection",
+                        mode: "row",
+                        multipleSelection: true
+                    },
+                    {
+                        name: "Paging"
+                    },
+                    {
+                        name: "Filtering"
+                    }
+                ]
+            });
+
+            var gridPageSize = $('#grid1').igGridPaging('pageSize');
+            AddPageOptions(gridPageSize);
+            AddOptions();
+            SetFilterConditions();
+        });
+
+        function AddOptions() {
+            $("#rows").empty();
+            $("#columns").empty();
+
+            var rows = $("#grid1").igGrid("rows");
+            for (var i = 0; i < rows.length; i++) {
+                $('#RowSelect').append('<option>' + i + '</option>');
+                $("#rows").append("<option>" + (i + 1) + "</option>");
+            }
+
+            var columns = $("#grid1").igGrid("option", "columns");
+            for (var i = 0; i < columns.length; i++) {
+                $("#columns").append("<option>" + (i + 1) + "</option>");
+                $("#filterColumn").append("<option>" + columns[i].key + "</option>");
+            }
+        }
+
+        function AddPageOptions(pageSize) {
+            var pageSelect = $('#PageIndexSelect');
+            $(pageSelect).empty();
+            for (var i = 0; i < northwind.results.length / pageSize; i++) {
+                $(pageSelect).append('<option>' + i + '</option>');
+            }
+        }
+
+        function SetFilterConditions() {
+            var filterColumn = $("#filterColumn").val();
+            $("#cond_list option:selected").removeAttr("selected");
+            if (filterColumn === "EmployeeID" || filterColumn === "PostalCode") {
+                $("#cond_list .stringCondition").attr("disabled", "disabled");
+                $("#cond_list .numberCondition").removeAttr("disabled").eq(0).attr("selected", "selected");
+            }
+            else {
+                $("#cond_list .stringCondition").removeAttr("disabled").eq(0).attr("selected", "selected");
+                $("#cond_list .numberCondition").attr("disabled", "disabled");
+            }
+        }
+    </script>
+</body>
+</html>

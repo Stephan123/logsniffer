@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="../css/jqm/jquery.mobile.structure.min.css"  rel="stylesheet"/>
+
+    <!-- Required Ignite UI Mobile Combined CSS Files -->
+    <link href="../../mobile/css/structure/infragistics.mobile.css"  rel="stylesheet"/>
+    <link href="../../mobile/css/themes/ios/infragistics.mobile.theme.css"  rel="stylesheet"/>
+
+    <script src="../js/jqm/jquery.min.js"></script>
+    <script src="../js/jqm/jquery.mobile.min.js"></script>
+
+    <!-- Required Ignite UI Mobile Combined JavaScript File -->
+    <script src="../../mobile/js/infragistics.mobile.js"></script>
+</head>
+<body>
+    <div data-role="page">
+
+        <!--Sample JSON Data-->
+        <script src="../data-files/nw-employees.js"></script>
+        
+        <div data-role="content">
+            <ul id="jsonListView"
+                data-role="iglistview"
+                data-icon-mode="thumbnail"
+                data-data-source="northwindEmployees"
+                data-bindings-header-key="Name"
+                data-bindings-primary-key="ID"
+                data-bindings-text-key="Phone"
+                data-bindings-image-url-key="ImageUrl">
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+
+    <div id="chart"></div>
+
+    <script>
+
+        $(function () {
+
+            var data = [
+                { "CountryName": "China", "Pop1990": 1141, "Pop2008": 1333, "Pop2025": 1458 },
+                { "CountryName": "India", "Pop1990": 849, "Pop2008": 1140, "Pop2025": 1398 },
+                { "CountryName": "United States", "Pop1990": 250, "Pop2008": 304, "Pop2025": 352 },
+                { "CountryName": "Indonesia", "Pop1990": 178, "Pop2008": 228, "Pop2025": 273 },
+                { "CountryName": "Brazil", "Pop1990": 150, "Pop2008": 192, "Pop2025": 223 }
+            ];
+
+            $("#chart").igDataChart({
+                width: "300px",
+                height: "200px",
+                dataSource: data,
+                axes: [
+                    {
+                        name: "NameAxis",
+                        type: "categoryX",
+                        label: "CountryName"
+                    },
+                    {
+                        name: "PopulationAxis",
+                        type: "numericY"
+                    }
+                ],
+                series: [
+                    {
+                        name: "1990Population",
+                        type: "column",
+                        xAxis: "NameAxis",
+                        yAxis: "PopulationAxis",
+                        valueMemberPath: "Pop1990"
+                    }
+                ]
+            });
+
+        });
+    </script>
+
+</body>
+</html>

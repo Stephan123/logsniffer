@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.dv.js"></script>
+
+</head>
+<body>
+
+    <!-- Target element for the map -->
+    <div id="map"></div>
+
+    <script type="text/javascript" src="../js/map-helper.js"></script>
+
+    <script>
+
+        $(function () {
+
+            mapHelper();
+
+            $("#map").igMap({
+                width: "100%",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../images/samples/maps/world.png",
+                panModifier: "control",
+                backgroundContent: {
+                    type: "bing",
+                    key: bingData
+                },
+                series: [{
+                    type: "geographicShape",
+                    name: "worldCountries",
+                    markerType: "automatic",
+                    shapeMemberPath: "points",
+                    shapefileUri: "../data-files/shapes/world.shp",
+                    databaseUri: "../data-files/shapes/world.dbf"
+                }],
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0,
+                    top: 0,
+                    height: 0.7,
+                    width: 0.7
+                }
+            });
+
+        });
+
+    </script>
+
+<style>.ig-note {background-color:#FFA54F;display:inline-block;margin-top:40px;padding:10px;border-radius:3px;font-family:"'Segoe UI",Arial,sans-serif;}.ig-note-bold {font-weight:bold;}</style><div class="ig-note"><span class="ig-note-bold">Note: </span>This sample <span class="ig-note-bold">must be hosted on a web server</span> and <span class="ig-note-bold">requires an internet connection</span> to work as expected.</div></body>
+</html>

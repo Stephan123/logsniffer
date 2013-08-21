@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+</head>
+<body>
+    <style>        
+        .combo-label {margin-bottom:.5em;}
+    </style>
+
+    <h4 class="combo-label">Auto-Complete, Filtering, Highlighting</h4>
+    <div id="autoCompleteCombo"></div>
+
+    <h4 class="combo-label">Filtering and Highlighting</h4>
+    <div id="filterContainsCombo"></div>
+
+    <h4 class="combo-label">Case-Sensitive</h4>
+    <div id="caseSensitiveCombo"></div>
+
+    <script src="../data-files/nw-products.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#autoCompleteCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                autoComplete: true,
+                filteringType: "local",
+                renderMatchItems: "startsWith"
+            });
+
+            $("#filterContainsCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                filteringType: "local",
+                filterCondition: "contains",
+                renderMatchItems: "contains"
+            });
+
+            $("#caseSensitiveCombo").igCombo({
+                width: "300px",
+                textKey: "ProductName",
+                valueKey: "ProductID",
+                dataSource: northwindProducts,
+                filteringType: "local",
+                autoComplete: true,
+                caseSensitive: true
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

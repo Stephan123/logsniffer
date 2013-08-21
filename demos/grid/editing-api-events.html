@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="../../css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="../../css/structure/infragistics.css" rel="stylesheet" />
+
+    <!-- Used to style the API Viewer and Explorer UI -->
+    <link href="../css/apiviewer.css" rel="stylesheet" type="text/css" />
+
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="../../js/infragistics.core.js"></script>
+    <script src="../../js/infragistics.lob.js"></script>
+
+    <!-- Used to add markup and provide logging 
+        functionality for the API Explorer and API Viewer UI -->
+    <script src="../js/apiviewer.js"></script>
+
+</head>
+<body>
+    <div class="api-explorer">
+        <fieldset id="editOptions">
+            <legend>Edit settings</legend>
+            <select id="editMode">
+                <option selected="selected">row</option>
+                <option>cell</option>
+                <option>rowedittemplate</option>
+                <option>none</option>
+            </select>
+            <br />
+            <select id="startEditTriggers">
+                <option value="click,F2,enter" selected="selected">click,F2,enter</option>
+                <option value="dblclick,F2,enter">dblclick,F2,enter</option>
+                <option value="dblclick">dblclick</option>
+                <option value="click">click</option>
+                <option value="click,F2">click,F2</option>
+                <option value="F2,enter">F2,enter</option>
+            </select>
+            <br />
+            <input type="checkbox" id="showButtons" checked="checked" /><label for="showButtons">Show Done/Cancel Buttons</label>
+        </fieldset>
+        <br />
+
+        <fieldset id="deletingOptions">
+            <legend>Deleting settings</legend>
+            <input type="checkbox" id="enableDelete" checked="checked" /><label for="enableDelete">Enable Delete Row</label>
+            <br />
+            Select Row Index<span id="rowSelect"></span>
+            <br />
+            <input type="button" id="deleteRow" value="Delete row" />
+        </fieldset>
+        <br />
+
+        <fieldset id="addingOptions">
+            <legend>Adding settings</legend>
+
+            <input type="checkbox" id="enableAddRow" checked="checked" /><label for="enableAddRow">Enable Add Row</label>
+            <br />
+            <table class="standard-grid">
+                <tr>
+                    <td>Employee ID
+			                <br />
+                        <input id="employeeID" type="text" readonly="readonly" />
+                    </td>
+                    <td>First Name
+			                <br />
+                        <input id="firstName" type="text" />
+                    </td>
+                    <td>Last Name
+			                <br />
+                        <input id="lastName" type="text" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Title
+			                <br />
+                        <input id="title" type="text" />
+                    </td>
+                    <td>Birth Date
+			                <br />
+                        <input id="birthDate" type="text" />
+                    </td>
+                    <td>Postal Code 
+			                <br />
+                        <input id="postCode" type="text" />
+                    </td>
+                    <td>Country
+			                <br />
+                        <input id="country" type="text" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input id="addRow" type="button" value="Add row" />
+
+        </fieldset>
+    </div>
+
+
+    <!--Sample JSON Data-->
+    <script src="../data-files/northwind.js"></script>
+
+    <!-- Target element for the igGrid -->
+    <table id="grid1">
+    </table>
+
+    <div class="api-viewer"></div>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            // Used to show output in the API Viewer at runtime, 
+            // defined in external script 'apiviewer.js'    
+            var apiViewer = new $.ig.apiViewer();
+
+            var titles = ["Sales Representative", "Sales Manager", "Inside Sales Coordinator", "Vice President, Sales"];
+            var countries = ["UK", "USA"];
+
+            /*----------------- Method & Option Examples -------------------------*/
+
+            // process events of checkboxes
+            $("#enableDelete").on({
+                change: function (e) {
+                    $("#grid1").igGridUpdating("option", "enableDeleteRow", $(this).is(":checked"));
+                }
+            });
+
+            $("#enableAddRow").on({
+                change: function (e) {
+                    $("#grid1").igGridUpdating("option", "enableAddRow", $(this).is(":checked"));
+                }
+            });
+
+            $("#showButtons").on({
+                change: function (e) {
+                    $("#grid1").igGridUpdating("option", "showDoneCancelButtons", $(this).is(":checked"));
+                }
+            });
+
+            // process events of select options
+            $("#editMode").on({
+                change: function (e) {
+                    var editMode = $(this).val();
+                    $("#grid1").igGridUpdating("option", "editMode", editMode);
+                }
+            });
+
+            $("#startEditTriggers").on({
+                change: function (e) {
+                    var startEditTriggers = $(this).val();
+                    $("#grid1").igGridUpdating("option", "startEditTriggers", startEditTriggers);
+                }
+            });
+
+            // process events of buttons
+
+            $("#deleteRow").on({
+                click: function (e) {
+                    var rowIndex = $("#rowSelect").igNumericEditor("option", "value"),
+                        tr = $("#grid1").igGrid("rowAt", parseInt(rowIndex));
+                    if (!tr) return;
+
+                    $("#grid1").igGridUpdating("deleteRow", rowIndex, tr);
+                }
+            });
+
+            $("#addRow").bind({
+                click: function (e) {
+                    var rowObj = {
+                        "EmployeeID": $("#employeeID").val(),
+                        "FirstName": $("#firstName").val(),
+                        "LastName": $("#lastName").val(),
+                        "Title": $("#title").val(),
+                        "BirthDate": $("#birthDate").val(),
+                        "PostalCode": $("#postCode").val(),
+                        "Country": $("#country").val()
+                    };
+
+                    $("#grid1").igGridUpdating("addRow", rowObj);
+                }
+            });
+
+            /*----------------- Event Examples -------------------------*/
+
+            $("#grid1").on("iggridupdatingrowdeleting", function (evt, ui) {
+                var message = "iggridupdatingrowdeleting";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridupdatingrowadding", function (evt, ui) {
+                var message = "iggridupdatingrowadding";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridupdatingeditcellending", function (evt, ui) {
+                var message = "iggridupdatingeditcellending";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridupdatingeditrowstarting", function (evt, ui) {
+                var message = "iggridupdatingeditrowstarting";
+                apiViewer.log(message);
+            });
+
+            $("#grid1").on("iggridupdatingeditrowending", function (evt, ui) {
+                var message = "iggridupdatingeditrowending";
+                apiViewer.log(message);
+            });
+
+            /*----------------- Instantiation -------------------------*/
+
+            $("#grid1").igGrid({
+                virtualization: false,
+                autoGenerateColumns: false,
+                renderCheckboxes: true,
+                primaryKey: "EmployeeID",
+                columns: [{
+                    // note: if primaryKey is set and data in primary column contains numbers,
+                    // then the dataType: "number" is required, otherwise, dataSource may misbehave
+                    headerText: "Employee ID", key: "EmployeeID", width: "100px", dataType: "number"
+                }, {
+                    headerText: "First Name", key: "FirstName", width: "130px"
+                }, {
+                    headerText: "Last Name", key: "LastName", width: "100px"
+                }, {
+                    headerText: "Title", key: "Title", width: "150px"
+                }, {
+                    headerText: "Birth Date", key: "BirthDate", width: "120px", dataType: "date"
+                }, {
+                    headerText: "Postal Code", key: "PostalCode", width: "150px", dataType: "number"
+                }, {
+                    headerText: "Country", key: "Country", width: "150px", dataType: "string"
+                }
+                ],
+                dataSource: northwind,
+                dataSourceType: "json",
+                responseDataKey: "results",
+                height: "500px",
+                tabIndex: 1,
+                features: [{
+                    name: "Selection",
+                    mode: "row"
+                }, {
+                    name: "Updating",
+                    enableAddRow: true,
+                    editMode: "row",
+                    enableDeleteRow: true,
+                    showReadonlyEditors: false,
+                    enableDataDirtyException: false,
+                    columnSettings: [{
+                        columnKey: "EmployeeID",
+                        readOnly: true
+                    }, {
+                        columnKey: "Title",
+                        editorType: "text"
+                    }, {
+                        columnKey: "Country",
+                        editorType: "text"
+                    },
+                    {
+                        columnKey: "BirthDate",
+                        editorType: "datepicker",
+                        validation: true,
+                        editorOptions: { minValue: new Date(1955, 1, 19), maxValue: new Date(), required: true }
+                    }]
+                }]
+            });
+
+            // editors initialization
+
+            $("#rowSelect").igNumericEditor({
+                dataMode: "sbyte",
+                button: "spin",
+                value: 0,
+                minValue: 0,
+                maxValue: 29,
+                width: 150
+            });
+
+
+            $("#employeeID").igEditor({
+                width: 100,
+                type: "numeric",
+                value: $("#grid1").data("igGrid").element.find("tr").length + 1,
+                disabled: true
+            });
+
+            $("#birthDate").igDatePicker({
+                width: 120,
+                minValue: new Date(2009, 6, 26),
+                maxValue: new Date(),
+                required: true
+            });
+
+            $("#country").igEditor({
+                width: 80,
+                button: "dropdown",
+                listItems: countries,
+                value: countries[1]
+            });
+
+            $("#title").igEditor({
+                width: 130,
+                button: "dropdown",
+                listItems: titles,
+                value: titles[1]
+            });
+
+            $("#postCode").igEditor({
+                width: 100,
+                type: "mask",
+                inputMask: ">00000",
+                dataMode: "rawtext"
+            });
+        });
+    </script>
+</body>
+</html>
