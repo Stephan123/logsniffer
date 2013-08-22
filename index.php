@@ -57,6 +57,8 @@ class gitlog
 
     public function __construct()
     {
+        ini_set('max_execution_time', 60);
+
         date_default_timezone_set('Europe/London');
         $this->connect = new mysqli($this->host, $this->user, $this->password, $this->datenbank);
         mysqli_query($this->connect, "SET NAMES utf8");
@@ -175,7 +177,7 @@ class gitlog
         $kontrolle = mysqli_query($this->connect, $query);
 
         if(empty($kontrolle)){
-            echo $i.': '.$query.'<hr>';
+            echo $i.'. Fehler: '.$query.'<hr>';
 
             $i++;
         }
