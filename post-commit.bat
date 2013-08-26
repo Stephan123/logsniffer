@@ -1,0 +1,1 @@
+php c:\xampp\htdocs\logsniffer\kommandozeile.php

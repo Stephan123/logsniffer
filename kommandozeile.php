@@ -1,0 +1,5 @@
+<?php
+
+touch('touch.txt');
+
+?>
