@@ -1,5 +1,5 @@
 <?php
 
-echo 'Test';
+touch('c:\xampp\htdocs\logsniffer\touch.txt');
 
 ?>
