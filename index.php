@@ -227,16 +227,16 @@ class gitlog
     }
 }
 
-// $command = 'log --all --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
-$command = 'log -1 --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
+$command = 'log --all --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
+// $command = 'log -1 --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
 
 $gitLogbuch = new gitlog();
 
-//$gitLogbuch
-//    ->setCommand($command)
-//    ->loeschenTabelle()
-//    ->steuerungEintragenDatenbank();
-
 $gitLogbuch
     ->setCommand($command)
+    ->loeschenTabelle()
     ->steuerungEintragenDatenbank();
+
+//$gitLogbuch
+//    ->setCommand($command)
+//    ->steuerungEintragenDatenbank();

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>einfache Tabelle</title>
+    <meta charset="utf-8">
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="js/modernizr.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="ignite/infragistics.core.js"></script>
+    <script src="ignite/infragistics.lob.js"></script>
+
+</head>
+<body>
+
+    <table id="grid">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Vorname</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Krauß</td>
+                <td>Stephan</td>
+            </tr>
+            <tr>
+                <td>Krauß</td>
+                <td>Antje</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+<script type="text/javascript">
+    $("#grid").igGrid({
+        autoGenerateColumns: false,
+        virtualization: false,
+        columns: [
+            { headerText: "Hash", key: "hash", width: "150px", dataType: "string" },
+            { headerText: "E-Mail", key: "email", width: "170px", dataType: "string" }
+        ],
+        dataSource: 'localhost/logsniffer/logsniffer.php',
+        responseDataKey: 'records',
+        height: 400,
+        features: [{
+            name: 'Paging',
+            recordCountKey: 'totalCount',
+            pageSizeUrlKey: 'psize',
+            pageIndexUrlKey: 'page',
+            type: "remote"
+        },{
+            name: 'Sorting',
+            sortUrlKey: "sort", // same for sorting
+            sortUrlKeyAscValue: "asc",
+            sortUrlKeyDescValue: "desc",
+            type: "remote"
+        }]
+    });
+</script>
