@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kapitel 3 / 01 Das Infragistics Grid - Quickstart</title>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/themes/infragistics/infragistics.theme.css"
+              rel="stylesheet" type="text/css"/>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/structure/infragistics.css"
+              rel="stylesheet" type="text/css"/>
+
+    </head>
+    <body>
+        <table id="trainings">
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Untertitel</th>
+                    <th>Kategorie</th>
+                    <th>Trainer</th>
+                    <th>Preis</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ASP.NET MVC</td>
+                    <td>Ein einfacher Einstieg</td>
+                    <td>Programmierung</td>
+                    <td>Christian Wenz</td>
+                    <td>19,95 €</td>
+                </tr>
+                <tr>
+                    <td>JavaScript - Crashkurs für .NET-Entwickler</td>
+                    <td>Der praktische Einstieg</td>
+                    <td>Programmierung</td>
+                    <td>Ralph Steyer</td>
+                    <td>24,95 €</td>
+                </tr>
+                <tr>
+                    <td>Node.js – Crashkurs</td>
+                    <td>Serverseitige Anwendungen mit JavaScript</td>
+                    <td>Programmierung</td>
+                    <td>André Krämer</td>
+                    <td>29,95 €</td>
+                </tr>
+                <tr>
+                    <td>Windows 8 Apps mit HTML5 und JavaScript – Das große Training</td>
+                    <td>Anwendungen für Windows RT planen, entwickeln und veröffentlichen</td>
+                    <td>Programmierung</td>
+                    <td>André Krämer</td>
+                    <td>39,95 €</td>
+                </tr>
+            </tbody>
+        </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/ecmascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/ecmascript"></script>
+        <script src="//cdn-na.infragistics.com/jquery/20131/latest/js/infragistics.js" type="text/ecmascript"></script>
+        <script type="text/ecmascript">
+            $("#trainings").igGrid({
+                defaultColumnWidth: 120,
+                width: 500
+            })
+        </script>
+    </body>
+</html>

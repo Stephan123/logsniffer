@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kapitel 3 / 04 Das IgniteUI Grid - XML</title>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" type="text/css" />
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/structure/infragistics.css" rel="stylesheet" type="text/css" />
+
+    </head>
+    <body>
+        <table id="trainings">
+        </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/ecmascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/ecmascript"></script>
+        <script src="//cdn-na.infragistics.com/jquery/20131/latest/js/infragistics.js" type="text/ecmascript"></script>
+        <script type="text/ecmascript">
+
+
+            function getData(callback) {
+                var url = 'https://www.video2brain.com/de/custom/rss/rss_products.cfm';
+
+                $.get(url, function (result) {
+                    var xmlSchema = new $.ig.DataSchema("xml", {
+                        searchField: "//item",
+                        fields: [
+                    { name: "Title", xpath: "title/text()" },
+                    { name: "Beschreibung", xpath: "description/text()"}]
+                    });
+
+                    var ds = new $.ig.DataSource({
+                        type: "xml",
+                        dataSource: result,
+                        schema: xmlSchema
+                    });
+
+                    callback(ds);
+
+                });
+            }
+
+            getData(function (data) {
+                $("#trainings").igGrid({
+                    dataSource: data
+                });
+            });
+
+        </script>
+    </body>
+</html>
