@@ -14,8 +14,8 @@ class logSearch{
     private $dbpass = 'test';
     private $dbname = 'test';
 
-    private $pageSize = 0;
-    private $pageIndex = -1;
+    private $pageSize = 25;
+    private $pageIndex = 0;
 
     private $conn = null;
 
@@ -25,6 +25,9 @@ class logSearch{
     private $dataConnect = null;
     private $rows = array();
 
+    private $sort = null;
+    private $direction = null;
+
     public function __construct()
     {
         //Create the MySQL connection
@@ -33,30 +36,46 @@ class logSearch{
         mysqli_query($this->conn,"SET NAMES 'utf-8'");
     }
 
-    public function __destuct()
+    public function __destruct()
     {
         mysqli_close($this->conn);
     }
 
-    public function setLimit($pageSize, $pageIndex)
+    private function setLimit()
     {
-        //paging (LIMIT)
-        if ($pageSize > 0 && $pageIndex >= 0) {
-            $this->startIndex = $pageIndex * $pageSize;
-            $this->query = $this->query . " LIMIT $this->startIndex, $pageSize";
+        if ($this->pageSize > 0 && $this->pageIndex >= 0) {
+            $this->startIndex = $this->pageIndex * $this->pageSize;
+            $this->query .= " LIMIT $this->startIndex, $this->pageSize";
         }
 
-        return $this;
+        return;
     }
 
-    public function setGetter(array $getter)
+    private function setDirection()
     {
-        foreach ( $getter as $key => $value ) {
-            // translate paging params to the SQL query
+        if($this->sort !== NULL){
+            $this->query .= " order by ".$this->sort." ".$this->direction;
+        }
+
+        return;
+    }
+
+    public function setParameter(array $parameter)
+    {
+        foreach ( $parameter as $key => $value ) {
+
             if ($key == "psize")
                 $this->pageSize = $value;
             elseif($key == "page")
                 $this->pageIndex = $value;
+            elseif(strstr($key,'sort')){
+                $this->direction = $value;
+
+                $pattern = '#(sort\()([a-z]+)#is';
+                preg_match($pattern, $key, $subpattern);
+
+                $this->sort = $subpattern[2];
+            }
         }
 
         return $this;
@@ -64,7 +83,7 @@ class logSearch{
 
     private function selectAllQuery()
     {
-        $this->query = "select * from gitlog";
+        $this->query = "SELECT *, CONCAT(DATE_FORMAT(datum,'%d.%m.%Y'),' ',DATE_FORMAT(zeit,'%H:%i')) AS datumDeutsch FROM gitlog";
 
         return $this->query;
     }
@@ -99,17 +118,20 @@ class logSearch{
         return;
     }
 
-    public function steuerungFindenDerDaten(){
+    public function findenDaten(){
         $this->rows = array();
 
         $this->selectAllQuery();
+        $this->setDirection();// direction
+        $this->setLimit(); // limit
+
         $this->queryWork();
         $this->extractData();
 
         return $this;
     }
 
-    public function steuerungErmittelnAnzahlDaten()
+    public function anzahlDatensaetze()
     {
         $this->rows = array();
 
@@ -119,41 +141,17 @@ class logSearch{
 
         return $this;
     }
-
-//    private function orderBy()
-//    {
-//        $orderBy = " ORDER BY ";
-//
-//        $multiSort = false;
-//        $multiFilter = false;
-//
-//        // this will go in the "foreach" statement to handle sorting
-//        if (strpos($key, "sort(") >= 0 && strpos($key, "sort(") !== false) {
-//
-//            if ($multiSort) {
-//               $orderBy = $orderBy . ", ";
-//            }
-//
-//            $orderBy = $orderBy . substr(substr($key, 0, strlen($key)-1), strpos($key, "(") + 1) . " " . $value;
-//            $multiSort = true;
-//        }
-//
-//        //this will go right before adding the paging parameters to the query
-//        if ($orderBy != " ORDER BY ") {
-//             // sorting (ORDER BY)
-//             $query = $query . $orderBy;
-//        }
-//    }
-
 }
 
 $search = new logSearch();
-$rows = $search->steuerungFindenDerDaten()->getRows();
 
-$anzahl = $search->steuerungErmittelnAnzahlDaten()->getRows();
+$rows = $search->setParameter($_GET)->findenDaten()->getRows();
+$anzahl = $search->anzahlDatensaetze()->getRows();
 $totalCount = $anzahl[0]['anzahl'];
 
 //Serializing data to JSON array and sending it back
 header("Content-type: application/json");
 $response = array("totalCount" => $totalCount, "records" => $rows);
 echo json_encode($response);
+
+?>
