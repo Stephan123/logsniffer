@@ -12,11 +12,6 @@
  *
  *
 
-Create Table
-
-
-Create Table
-
 CREATE TABLE `gitlog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `hash` varchar(255) NOT NULL,
@@ -45,11 +40,11 @@ class gitlog
 
     protected $output = array();
 
-    protected $host = 'localhost';
-    protected $datenbank = 'test';
+    protected $host = 'www.herden.de';
+    protected $datenbank = 'db1154036-logbuch';
     protected $tabelle = 'gitlog';
-    protected $user = 'test';
-    protected $password = 'test';
+    protected $user = 'db1154036-log55';
+    protected $password = 'log55test!';
 
     protected $connect = null;
     protected $command = null;
@@ -103,13 +98,14 @@ class gitlog
         foreach($this->output as $line){
             // $i = $this->darstellenDatensatz($i, $line);
             $this->eintragenDatenbank($i, $line);
-
         }
+		
+		$datum = date("d.m.Y H:i:s");
 
         if($i < 2)
-            echo 'Daten des Log &uuml;bernommen !';
+            echo "Datum: ".$datum." ".'Daten des Log übernommen !';
         else
-            echo 'Während der Daten&uuml;bernahme traten Fehler auf ! <hr>';
+            echo "Datum: ".$datum." ".'Während der Datenübernahme traten Fehler auf ! <hr>';
 
         return $this;
     }
@@ -227,6 +223,8 @@ class gitlog
 }
 
 $command = 'log --all --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
+// $command = 'log -1 --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
 
 $gitLogbuch = new gitlog();
 $gitLogbuch->setCommand($command)->loeschenTabelle()->steuerungEintragenDatenbank();
+// $gitLogbuch->setCommand($command)->steuerungEintragenDatenbank();

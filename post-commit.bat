@@ -1,1 +1,1 @@
-php c:\xampp\htdocs\logsniffer\kommandozeile.php
+php c:\xampp\htdocs\logsniffer\index.php
