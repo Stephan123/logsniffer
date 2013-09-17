@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kapitel 4 / 02 Das IgniteUI Chart - Kuchendiagramm erweitert</title>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" type="text/css" />
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/structure/infragistics.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="chart"></div>
+        <div id="legend"></div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/ecmascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/ecmascript"></script>
+        <script src="//cdn-na.infragistics.com/jquery/20131/latest/js/infragistics.js" type="text/ecmascript"></script>
+        <script type="text/ecmascript">
+            var data = [
+                    { "Kosten": 20, "Kategorie": "Miete" },
+                    { "Kosten": 25, "Kategorie": "KFZ" },
+                    { "Kosten": 15, "Kategorie": "Lebensmittel" },
+                    { "Kosten": 30, "Kategorie": "Versicherungen" },
+                    { "Kosten": 10, "Kategorie": "Freizeit" }
+                ];
+
+
+            $("#chart").igPieChart({
+                dataSource: data,
+                width: "500px",
+                height: "500px",
+                valueMemberPath: "Kosten",
+                labelMemberPath: "Kategorie",
+                legend: {
+                    element: "legend",
+                    type: "item"
+                },
+                explodedSlices: "0 1",
+                radiusFactor: 0.8
+            });
+
+        </script>
+    </body>
+</html>

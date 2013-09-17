@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>einfache Tabelle</title>
+    <meta charset="utf-8">
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="css/themes/metro/infragistics.theme.css" rel="stylesheet" />
+    <!-- <link href="css/themes/smoothness/custom.css" rel="stylesheet" /> -->
+    <link href="css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="js/modernizr.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+
+    <script src="ignite/i18n/infragistics-de.js" type="text/javascript"></script>
+    <script src="ignite/modules/i18n/regional/infragistics.ui.regional-de.js" type="text/javascript"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="ignite/infragistics.core.js" type="text/javascript"></script>
+    <script src="ignite/infragistics.lob.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+           $.ig.loader({
+               scriptPath: 'ignite/',
+               cssPath: 'css/',
+               locale: "de",
+               regional: "de",
+               resources: "igGrid"
+           });
+
+           $.ig.loader(function(){
+               $("#grid").igGrid({
+                   defaultColumnWidth: 250
+               });
+           });
+
+
+       </script>
+
+</head>
+<body>
+
+    <table id="grid"></table>
+</body>
+</html>
+
+<script type="text/javascript">
+    $("#grid").igGrid({
+        autoGenerateColumns: false,
+        virtualization: false,
+        columns: [
+            { headerText: "Name", key: "name", width: "200px", dataType: "string" },
+            { headerText: "Datum", key: "datumDeutsch", width: "150px", dataType: "string" },
+            { headerText: "Bereich", key: "module", width: "100px", dataType: "string" },
+            { headerText: "Baustein", key: "view", width: "100px", dataType: "string" },
+            { headerText: "Beschreibung", key: "beschreibung", width: "300", dataType: "string" }
+        ],
+        dataSource: 'http://localhost/logsniffer/search.php',
+        responseDataKey: 'records',
+        height: 600,
+        features: [{
+            name: 'Paging',
+            recordCountKey: 'totalCount',
+            pageSizeUrlKey: 'psize',
+            pageIndexUrlKey: 'page',
+            type: "remote"
+        },{
+            name: 'Sorting',
+            sortUrlKey: "sort", // same for sorting
+            sortUrlKeyAscValue: "asc",
+            sortUrlKeyDescValue: "desc",
+            type: "remote"
+        },{
+            name: 'Filtering',
+            mode: 'advanced'
+        }]
+    });
+</script>

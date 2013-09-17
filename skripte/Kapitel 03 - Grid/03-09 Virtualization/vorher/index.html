@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kapitel 3 / 09 Das IgniteUI Grid - Virtual Mode</title>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" type="text/css" />
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/structure/infragistics.css" rel="stylesheet" type="text/css" />
+
+    </head>
+    <body>
+        <table id="trainings">
+        </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/ecmascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/ecmascript"></script>
+        <script src="//cdn-na.infragistics.com/jquery/20131/latest/js/infragistics.js" type="text/ecmascript"></script>
+        <script src="data.js" type="text/ecmascript"></script>
+        <script type="text/ecmascript">
+
+            
+            $("#trainings").igGrid({
+               columns: [
+                    { headerText: "Titel", key: "title", dataType: "string" },
+                    { headerText: "Untertitel", key: "subtitle", dataType: "string" },
+                    { headerText: "Kategorie", key: "Category", dataType: "string" },
+                    { headerText: "Trainer", key: "Trainer", dataType: "string" },
+                    { headerText: "Preis", key: "Price", dataType: "number" }
+                ],
+                dataSource: v2bIgnite.data,
+                width: 1000
+            });
+            
+        </script>
+    </body>
+</html>

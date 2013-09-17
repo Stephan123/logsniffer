@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kapitel 3 / 02 Das IgniteUI Grid - JSON Daten</title>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/themes/infragistics/infragistics.theme.css"
+              rel="stylesheet" type="text/css"/>
+        <link href="http://cdn-na.infragistics.com/jquery/20131/latest/css/structure/infragistics.css"
+              rel="stylesheet" type="text/css"/>
+
+    </head>
+    <body>
+        <table id="trainings">
+         </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/ecmascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/ecmascript"></script>
+        <script src="//cdn-na.infragistics.com/jquery/20131/latest/js/infragistics.js" type="text/ecmascript"></script>
+        <script type="text/ecmascript">
+            var data = [
+                { title: 'ASP.NET MVC', subtitle: 'Ein einfacher Einstieg', Category: 'Programmierung',
+                    Trainer: 'Christian Wenz', Price: 19.95
+                },
+                { title: 'JavaScript - Crashkurs für .NET-Entwickler', subtitle: 'Der praktische Einstieg', Category: 'Programmierung',
+                    Trainer: 'Ralph Steyer', Price: 24.95
+                },
+                { title: 'Node.js – Crashkurs', subtitle: 'Serverseitige Anwendungen mit JavaScript', Category: 'Programmierung',
+                    Trainer: 'André Krämer', Price: 29.95
+                },
+                { title: 'Windows 8 Apps mit HTML5 und JavaScript – Das große Training', subtitle: 'Anwendungen für Windows RT planen, entwickeln und veröffentlichen',
+                    Category: 'Programmierung', Trainer: 'André Krämer', Price: 39.95
+                }
+            ];
+
+            $("#trainings").igGrid({ dataSource: data });
+        </script>
+    </body>
+</html>
