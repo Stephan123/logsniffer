@@ -147,12 +147,21 @@ class logSearch{
 $search = new logSearch();
 
 $rows = $search->setParameter($_GET)->findenDaten()->getRows();
+
+// Sonderzeichen nach UTF8
+for($i=0; $i < count($rows); $i++){
+    $rows[$i]['beschreibung'] = utf8_encode($rows[$i]['beschreibung']);
+}
+
+
 $anzahl = $search->anzahlDatensaetze()->getRows();
 $totalCount = $anzahl[0]['anzahl'];
 
 //Serializing data to JSON array and sending it back
 header("Content-type: application/json");
 $response = array("totalCount" => $totalCount, "records" => $rows);
+
+
 echo json_encode($response);
 
 ?>
