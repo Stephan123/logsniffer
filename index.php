@@ -1,4 +1,7 @@
 <?php
+
+set_time_limit(120);
+
 /**
  * schreibt die Logdatei eines Git Log in eine Tabelle
  *
@@ -50,6 +53,8 @@ class gitlog
     protected $command = null;
     protected $history = array();
 
+    protected $zaehler = 0;
+
     public function __construct()
     {
         ini_set('max_execution_time', 60);
@@ -94,18 +99,14 @@ class gitlog
 
         $this->ermittelnOutput();
 
-        $i = 1;
-        foreach($this->output as $line){
+        for($i=1;  $i<= count($this->output);  $i++){
             // $i = $this->darstellenDatensatz($i, $line);
-            $this->eintragenDatenbank($i, $line);
+            $this->eintragenDatenbank($this->output[$i]);
         }
 		
 		$datum = date("d.m.Y H:i:s");
 
-        if($i < 2)
-            echo "Datum: ".$datum." ".'Daten des Log übernommen !';
-        else
-            echo "Datum: ".$datum." ".'Während der Datenübernahme traten Fehler auf ! <hr>';
+        echo "<hr>Datum: ".$datum." ".'Daten des Log übernommen !';
 
         return $this;
     }
@@ -124,11 +125,13 @@ class gitlog
         return $i;
     }
 
-    public function eintragenDatenbank(&$i, $line){
+    public function eintragenDatenbank($line){
         $insert = explode("#", $line);
 
         if(!is_array($insert) or count($insert) < 3)
             return;
+
+        $this->zaehler++;
 
         $insert[8] = $this->korrrekturZeit($insert[3]);
         $insert[3] = $this->korrekturDatum($insert[3]);
@@ -139,7 +142,6 @@ class gitlog
         $insert[5] = $ort[1];
 
         $kontrolle = ksort($insert);
-
 
         $keys = array(
            0 => 'hash',
@@ -172,11 +174,10 @@ class gitlog
 
         $kontrolle = mysqli_query($this->connect, $query);
 
-        if(empty($kontrolle)){
-            echo $i.'. Fehler: '.$query.'<hr>';
-
-            $i++;
-        }
+        if(empty($kontrolle))
+            echo "<div style='border: solid red 1px; margin-top: 10px; background-color: #F37070;'>".$this->zaehler." Fehler Kommando: ".$query.'</div>';
+        else
+            echo "<div style='border: solid green 1px; margin-top: 10px; background-color: #AAF1A6;'> Kommando: ".$this->zaehler.'</div>';
 
         return;
     }
