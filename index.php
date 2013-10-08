@@ -49,6 +49,12 @@ class gitlog
     protected $user = 'db1154036-log55';
     protected $password = 'log55test!';
 
+//    protected $host = 'localhost';
+//    protected $datenbank = 'test';
+//    protected $tabelle = 'gitlog';
+//    protected $user = 'test';
+//    protected $password = 'test';
+
     protected $connect = null;
     protected $command = null;
     protected $history = array();
@@ -64,6 +70,9 @@ class gitlog
         mysqli_query($this->connect, "SET NAMES utf8");
     }
 
+    /**
+     * @return gitlog
+     */
     public function loeschenTabelle()
     {
         $sql = "truncate table gitlog";
@@ -72,6 +81,10 @@ class gitlog
         return $this;
     }
 
+    /**
+     * @param $command
+     * @return gitlog
+     */
     public function setCommand($command)
     {
         $this->command = $command;
@@ -84,11 +97,22 @@ class gitlog
         $output = array();
         chdir($this->dir);
         exec('"C:\Program Files (x86)\Git\bin\git.exe" ' .$this->command, $output);
-        $this->output = $output;
+
+        foreach($output as $key => $value){
+            if(empty($value))
+                unset($output[$key]);
+        }
+
+        $outputClean = array_merge($output);
+
+        $this->output = $outputClean;
 
         return;
     }
 
+    /**
+     * @return gitlog
+     */
     public function steuerungEintragenDatenbank()
     {
         if(empty($this->command)){
@@ -97,13 +121,14 @@ class gitlog
             exit();
         }
 
+        // list Inhalt Logdatei in CSV Datei
         $this->ermittelnOutput();
 
         for($i=1;  $i<= count($this->output);  $i++){
-            // $i = $this->darstellenDatensatz($i, $line);
             $this->eintragenDatenbank($this->output[$i]);
+            echo $i.'<hr>';
         }
-		
+
 		$datum = date("d.m.Y H:i:s");
 
         echo "<hr>Datum: ".$datum." ".'Daten des Log übernommen !';
@@ -125,61 +150,50 @@ class gitlog
         return $i;
     }
 
+    /**
+     * @param $line
+     * @return gitlog
+     */
     public function eintragenDatenbank($line){
-        $insert = explode("#", $line);
+        $teile = explode(";", $line);
 
-        if(!is_array($insert) or count($insert) < 3)
+        if(count($teile) < 3)
             return;
 
-        $this->zaehler++;
+        $ort = $this->korrekturOrt($teile[4]);
 
-        $insert[8] = $this->korrrekturZeit($insert[3]);
-        $insert[3] = $this->korrekturDatum($insert[3]);
-        $ort = $this->korrekturOrt($insert[4]);
-        $insert[6] = $insert[5];
-        $insert[7] = $insert[4];
-        $insert[4] = $ort[0];
-        $insert[5] = $ort[1];
-
-        $kontrolle = ksort($insert);
-
-        $keys = array(
-           0 => 'hash',
-           1 => 'email',
-           2 => 'name',
-           3 => 'datum',
-           4 => 'module',
-           5 => 'view',
-           6 => 'beschreibung',
-           7 => 'betreff',
-           8 => 'zeit'
+        $insert = array(
+            'hash' => $teile[0],
+            'email' => $teile[1],
+            'name' => $teile[2],
+            'datum' => $this->korrekturDatum($teile[3]),
+            'zeit' => $this->korrrekturZeit($teile[3]),
+            'module' => $ort[0],
+            'view' => $ort[1],
+            'beschreibung' => $teile[5],
+            'betreff' => $teile[4]
         );
 
+        $fields = "";
+        $values = "";
+
+        foreach($insert as $field => $value){
+            $fields .= $field.",";
+
+            $values .= '"'.htmlspecialchars($value).'",';
+        }
+
+        $fields = substr($fields, 0, -1);
+        $values = substr($values, 0, -1);
+
         $query = "insert into gitlog (";
+        $query .= $fields.") ";
+        $query .= "values(";
+        $query .= $values.")";
 
-        foreach($keys as $key => $spalte){
-            $query .= $spalte.",";
-        }
+        mysqli_query($this->connect, $query);
 
-        $query = substr($query,0,-1);
-        $query .= ") values (";
-
-        foreach($insert as $key => $values){
-            $values = str_replace('"','\'',$values);
-            $query .= '"'.$values.'",';
-        }
-
-        $query = substr($query, 0, -1);
-        $query .= ")";
-
-        $kontrolle = mysqli_query($this->connect, $query);
-
-        if(empty($kontrolle))
-            echo "<div style='border: solid red 1px; margin-top: 10px; background-color: #F37070;'>".$this->zaehler." Fehler Kommando: ".$query.'</div>';
-        else
-            echo "<div style='border: solid green 1px; margin-top: 10px; background-color: #AAF1A6;'> Kommando: ".$this->zaehler.'</div>';
-
-        return;
+        return $this;
     }
 
     private function korrekturDatum($datum)
@@ -223,9 +237,15 @@ class gitlog
     }
 }
 
-$command = 'log --all --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
-// $command = 'log -1 --pretty=format:"%H#%ce#%cn#%ci#%s#%b"';
+$command = 'log --all --pretty=format:"%H;%ce;%cn;%ci;%s;%b"';
+// $command = 'log -1 --pretty=format:"%H;%ce;%cn;%ci;%s;%b"';
 
 $gitLogbuch = new gitlog();
-$gitLogbuch->setCommand($command)->loeschenTabelle()->steuerungEintragenDatenbank();
-// $gitLogbuch->setCommand($command)->steuerungEintragenDatenbank();
+ $gitLogbuch
+    ->setCommand($command)
+    ->loeschenTabelle()
+    ->steuerungEintragenDatenbank();
+	
+// $gitLogbuch
+//  ->setCommand($command)
+//  ->steuerungEintragenDatenbank();
